@@ -1,26 +1,26 @@
 import {Head, Link, useRouter} from 'blitz'
-import createUser from 'app/users/mutations/createUser'
+import createTask from 'app/tasks/mutations/createTask'
 
-const NewUserPage = () => {
+const NewTaskPage = () => {
   const router = useRouter()
   return (
     <div className="container">
       <Head>
-        <title>New User</title>
+        <title>New Task</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1>Create New User </h1>
+        <h1>Create New Task </h1>
 
         <form onSubmit={async (event) => {
           event.preventDefault()
           try {
-            const user = await createUser({data: {name: 'MyName', email: 'email@email.com'}})
-            alert('Success!' + JSON.stringify(user))
-            router.push('/users/[id]', `/users/${user.id}`)
+            const task = await createTask({data: {name: 'MyName'}})
+            alert('Success!' + JSON.stringify(task))
+            router.push('/tasks/[id]', `/tasks/${task.id}`)
           } catch (error) {
-            alert('Error creating user ' + JSON.stringify(error, null, 2))
+            alert('Error creating task ' + JSON.stringify(error, null, 2))
           }
         }}>
           <div>Put your form fields here. But for now, just click submit</div>
@@ -28,8 +28,8 @@ const NewUserPage = () => {
         </form>
 
         <p>
-          <Link href="/users">
-            <a>Users</a>
+          <Link href="/tasks">
+            <a>Tasks</a>
           </Link>
         </p>
       </main>
@@ -37,5 +37,5 @@ const NewUserPage = () => {
   )
 }
 
-export default NewUserPage
+export default NewTaskPage
 

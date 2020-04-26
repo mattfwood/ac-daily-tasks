@@ -1,4 +1,4 @@
-import { ThemeProvider, GlobalStyles, defaultTheme } from 'minerva-ui';
+import { ThemeProvider, GlobalStyles, defaultTheme } from 'minerva-ui'
 
 const customTheme = {
   ...defaultTheme,
@@ -14,11 +14,11 @@ const customTheme = {
     borderBottomColor: 'primaryDark',
     fontWeight: 700,
     _hover: {
-      bg: 'primaryDark'
+      bg: 'primaryDark',
     },
     _active: {
-      bg: 'primaryDark'
-    }
+      bg: 'primaryDark',
+    },
   },
   Input: {
     ...defaultTheme.Input,
@@ -27,8 +27,8 @@ const customTheme = {
   colors: {
     ...defaultTheme.colors,
     primary: '#007d75',
-    primaryDark: '#00645e'
-  }
+    primaryDark: '#00645e',
+  },
 }
 
 export default function MyApp({ Component, pageProps }) {

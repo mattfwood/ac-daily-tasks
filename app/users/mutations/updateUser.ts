@@ -1,4 +1,4 @@
-import db, {UserUpdateArgs} from 'db'
+import db, { UserUpdateArgs } from 'db'
 
 export default async function updateUser(args: UserUpdateArgs) {
   // Don't allow updating ID

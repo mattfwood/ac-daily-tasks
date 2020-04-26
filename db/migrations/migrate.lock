@@ -6,3 +6,6 @@
 20200425234440-add_users
 20200426091326-add_token
 20200426091845-make_tokens_unique
+20200426135543-add_user_tasks
+20200426141531-task_completed_at_optional
+20200426143701-add_task_created_at

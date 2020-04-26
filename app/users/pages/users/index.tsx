@@ -1,5 +1,5 @@
-import {Suspense} from 'react'
-import {Head, Link, useQuery} from 'blitz'
+import { Suspense } from 'react'
+import { Head, Link, useQuery } from 'blitz'
 import getUsers from 'app/users/queries/getUsers'
 
 export const UsersList = () => {
@@ -46,6 +46,3 @@ const UsersPage = () => {
 }
 
 export default UsersPage
-
-
-

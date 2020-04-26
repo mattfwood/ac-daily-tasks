@@ -1,4 +1,10 @@
-import { Document, Html, DocumentHead, Main, NextScript /*DocumentContext*/ } from "@blitzjs/core"
+import {
+  Document,
+  Html,
+  DocumentHead,
+  Main,
+  NextScript /*DocumentContext*/,
+} from '@blitzjs/core'
 import { ServerStyleSheet } from 'styled-components'
 
 class MyDocument extends Document {
@@ -15,7 +21,8 @@ class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -37,7 +44,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <DocumentHead />
-        <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
         <body>
           <Main />
           <NextScript />

@@ -1,13 +1,15 @@
-import getCurrentUser from "app/users/queries/getCurrentUser"
-import cookie from 'cookie';
+import getCurrentUser from 'app/users/queries/getCurrentUser'
+import cookie from 'cookie'
+import { serializeCookie } from 'app/utils/cookies'
 
-const serializeCookie = (token: string) => cookie.serialize('ac-tasks', token, {
-  sameSite: 'lax',
-  secure: process.env.NODE_ENV === 'production',
-  maxAge: 72576000,
-  httpOnly: true,
-  path: '/',
-})
+// export const serializeCookie = (token: string) =>
+//   cookie.serialize('ac-tasks', token, {
+//     sameSite: 'lax',
+//     secure: process.env.NODE_ENV === 'production',
+//     maxAge: 72576000,
+//     httpOnly: true,
+//     path: '/',
+//   })
 
 export default async (req, res) => {
   // console.log(req.query);
@@ -16,13 +18,13 @@ export default async (req, res) => {
     return res.json({ success: false, message: 'Token not valid' })
   }
 
-  const user = await getCurrentUser(token);
+  const user = await getCurrentUser(token)
 
   // res.cookies('ac-daily-tasks', token, {
   //   httpOnly: true,
   // })
 
   res.setHeader('Set-Cookie', serializeCookie(token))
-  res.status(200).end();
+  res.status(200).end()
   // return res.json(user)
 }

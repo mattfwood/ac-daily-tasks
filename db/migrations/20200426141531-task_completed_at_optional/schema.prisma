@@ -1,6 +1,6 @@
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -20,6 +20,5 @@ model Task {
   id           Int       @default(autoincrement()) @id
   name         String
   completed_at DateTime?
-  created_at   DateTime  @default(now())
   userId       Int?
 }
