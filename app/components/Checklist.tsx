@@ -6,6 +6,7 @@ export default function Checklist({
   initialItems = [],
 }) {
   const [items, setItems] = useState(initialItems)
+  console.log({ items })
 
   function handleChange(index, changes) {
     const updatedItems = [...items]
@@ -35,8 +36,12 @@ export default function Checklist({
         <Flex key={index}>
           <Checkbox
             fontSize="18px"
-            onChange={() => handleChange(index, { checked: !item.checked })}
-            checked={item.checked}
+            onChange={() => {
+              const changes = { completed_at: item.completed_at ? null : new Date().toISOString() }
+              handleChange(index, changes);
+              updateTask({ ...item, ...changes });
+            }}
+            checked={!!item.completed_at}
             lineHeight="1"
           />
           <Input value={item.name} onChange={e => handleChange(index, { name: e.target.value })} onBlur={() => updateTask(item)} py={1} />

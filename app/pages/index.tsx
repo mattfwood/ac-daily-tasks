@@ -71,7 +71,7 @@ export const getServerSideProps = async (context) => {
   console.log(user)
 
   if (user) {
-    user.tasks = user?.tasks?.map(task => ({ ...task, created_at: task.created_at.toISOString() }))
+    user.tasks = user?.tasks?.map(task => ({ ...task, created_at: task.created_at.toISOString(), completed_at: task?.completed_at?.toISOString() ?? null }))
   }
 
   return {
