@@ -1,31 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Input, Flex, Alert } from 'minerva-ui'
 import createUser from 'app/users/mutations/createUser'
-import cookie from 'cookie'
-import getCurrentUser from 'app/users/queries/getCurrentUser'
-import axios from 'axios'
-import { useRouter } from 'blitz'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState('')
-  const router = useRouter()
+  // const router = useRouter()
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const token: string = params.get('token')
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search)
+  //   const token: string = params.get('token')
 
-    async function fetchUser() {
-      // const user = await getCurrentUser(token)
-      const res = await axios.post(`/api/auth?token=${token}`)
-      // router.push('/');
-    }
+  //   async function fetchUser() {
+  //     // const user = await getCurrentUser(token)
+  //     const res = await axios.post(`/api/auth?token=${token}`)
+  //     // router.push('/');
+  //   }
 
-    if (token) {
-      fetchUser()
-    }
-  }, [])
+  //   if (token) {
+  //     fetchUser()
+  //   }
+  // }, [])
 
   async function handleSubmit(e) {
     e.preventDefault()

@@ -1,10 +1,16 @@
 {
   "env": {
-    "DATABASE_URL": "@database_url"
+    "DATABASE_URL": "@database_url",
+    "POSTMARK_TOKEN": "@postmark_token",
+    "ORIGIN": "@origin",
+    "JWT_SECRET": "@jwt_secret"
   },
   "build": {
     "env": {
-      "DATABASE_URL": "@database_url"
+      "DATABASE_URL": "@database_url",
+      "POSTMARK_TOKEN": "@postmark_token",
+      "ORIGIN": "@origin",
+      "JWT_SECRET": "@jwt_secret"
     }
   }
 }

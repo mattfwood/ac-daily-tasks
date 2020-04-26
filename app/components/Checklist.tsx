@@ -26,6 +26,7 @@ export default function Checklist({
     const res = await axios.post('/api/tasks/new', {
       name: '',
     });
+    setItems([...items, res.data]);
   }
 
   return (

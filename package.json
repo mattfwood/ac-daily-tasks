@@ -35,6 +35,7 @@
     "jsonwebtoken": "8.5.1",
     "minerva-ui": "3.4.3",
     "nodemailer": "6.4.6",
+    "postmark": "2.5.1",
     "react": "experimental",
     "react-dom": "experimental",
     "styled-components": "5.1.0",
