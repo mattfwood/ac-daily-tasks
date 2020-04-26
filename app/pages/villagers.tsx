@@ -1,13 +1,10 @@
-import { Head, ssrQuery } from "blitz"
-import cookie from 'cookie';
-import LoginForm from "app/components/LoginForm"
+import { Head } from "blitz"
+import axios from 'axios';
 import Navigation from "app/components/Navigation"
-import Checklist from "app/components/Checklist"
 import Page from "app/components/Page"
-import getCurrentUser from "app/users/queries/getCurrentUser";
 
-const Home = ({ user, ...props}) => {
-  console.log({ props })
+const VillagersPage = (props) => {
+  // console.log(props);
 
   return (
   <div className="container">
@@ -16,12 +13,13 @@ const Home = ({ user, ...props}) => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-      <Navigation user={user} />
+    <Navigation />
 
     <main>
       <Page>
-        <LoginForm />
-        {/* <Checklist /> */}
+        Villagers
+        {/* <LoginForm />
+        <Checklist /> */}
       </Page>
     </main>
 
@@ -44,28 +42,29 @@ const Home = ({ user, ...props}) => {
       }
     `}</style>
   </div>
-);
+)
 }
 
-export const getServerSideProps = async (context) => {
-  // console.log(context);
-  const cookies = cookie.parse(context.req.headers.cookie ?? '');
-  console.log(cookies);
-  // console.log({ cookies });
+export async function getStaticProps(context) {
+  const res = await axios.get('http://acnhapi.com/villagers');
 
-  if (cookies['ac-tasks']) {
+  const villagers = Object.keys(res.data);
 
+  console.log({ villagers })
+
+  const images = [];
+  for (let villager of villagers) {
+    const image = await axios.get(`http://acnhapi.com/images/villagers/${villager}`)
+    images.push(image.data);
   }
 
-  const token = cookies['ac-tasks'];
-
-  const user = token ? await ssrQuery(getCurrentUser, token, context) : null
 
   return {
     props: {
-      user
-    }
-  };
+      data: res.data,
+      images,
+    }, // will be passed to the page component as props
+  }
 }
 
-export default Home
+export default VillagersPage

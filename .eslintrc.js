@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["react-app", "plugin:jsx-a11y/recommended"],
+  extends: ["react-app", "plugin:jsx-a11y/recommended", 'cratebind'],
   plugins: ["jsx-a11y"],
   rules: {
     "import/no-webpack-loader-syntax": "off",
