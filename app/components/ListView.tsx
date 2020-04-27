@@ -25,7 +25,8 @@ const CustomTab = (props) => (
 export default function ListView({ user }) {
   // console.log(user)
   return (
-    <Tabs>
+    // @ts-ignore
+    <Tabs defaultIndex={0}>
       <TabList>
         <Stack horizontal>
           <CustomTab>Fossils</CustomTab>
