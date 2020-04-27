@@ -1,4 +1,4 @@
-import db, {TaskUpdateArgs} from 'db'
+import db, { TaskUpdateArgs } from 'db'
 
 export default async function updateTask(args: TaskUpdateArgs) {
   // Don't allow updating ID

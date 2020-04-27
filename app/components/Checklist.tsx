@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { Flex, Checkbox, Stack, Button, Input } from 'minerva-ui'
 import axios from 'axios'
 
-export default function Checklist({
-  initialItems = [],
-}) {
+export default function Checklist({ initialItems = [] }) {
   const [items, setItems] = useState(initialItems)
   console.log({ items })
 
@@ -19,15 +17,15 @@ export default function Checklist({
   }
 
   async function updateTask(task) {
-    const res = await axios.post('/api/tasks/update', task);
+    const res = await axios.post('/api/tasks/update', task)
     console.log({ res })
   }
 
   async function addItem() {
     const res = await axios.post('/api/tasks/new', {
       name: '',
-    });
-    setItems([...items, res.data]);
+    })
+    setItems([...items, res.data])
   }
 
   return (
@@ -37,14 +35,23 @@ export default function Checklist({
           <Checkbox
             fontSize="18px"
             onChange={() => {
-              const changes = { completed_at: item.completed_at ? null : new Date().toISOString() }
-              handleChange(index, changes);
-              updateTask({ ...item, ...changes });
+              const changes = {
+                completed_at: item.completed_at
+                  ? null
+                  : new Date().toISOString(),
+              }
+              handleChange(index, changes)
+              updateTask({ ...item, ...changes })
             }}
             checked={!!item.completed_at}
             lineHeight="1"
           />
-          <Input value={item.name} onChange={e => handleChange(index, { name: e.target.value })} onBlur={() => updateTask(item)} py={1} />
+          <Input
+            value={item.name}
+            onChange={(e) => handleChange(index, { name: e.target.value })}
+            onBlur={() => updateTask(item)}
+            py={1}
+          />
         </Flex>
       ))}
       <Button onClick={addItem}>Add Task</Button>

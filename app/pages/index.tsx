@@ -21,11 +21,7 @@ const Home = ({ user, ...props }) => {
 
       <main>
         <Page>
-          {!user ? (
-            <LoginForm />
-          ) : (
-              <Checklist initialItems={user.tasks} />
-          )}
+          {!user ? <LoginForm /> : <Checklist initialItems={user.tasks} />}
         </Page>
       </main>
 
@@ -66,12 +62,18 @@ export const getServerSideProps = async (context) => {
   const token = context?.query?.token || cookies['ac-tasks']
 
   // @TODO: Fix this after finding datetime serialization workaround
-  const user: any = token ? await ssrQuery(getCurrentUser, token, context) : null;
+  const user: any = token
+    ? await ssrQuery(getCurrentUser, token, context)
+    : null
 
   console.log(user)
 
   if (user) {
-    user.tasks = user?.tasks?.map(task => ({ ...task, created_at: task.created_at.toISOString(), completed_at: task?.completed_at?.toISOString() ?? null }))
+    user.tasks = user?.tasks?.map((task) => ({
+      ...task,
+      created_at: task.created_at.toISOString(),
+      completed_at: task?.completed_at?.toISOString() ?? null,
+    }))
   }
 
   return {

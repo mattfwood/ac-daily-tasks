@@ -24,23 +24,22 @@ export default async function createUser(args: UserCreateArgs) {
   //   html: `<a href="${process.env.ORIGIN}?token=${token}">Sign In</a>`,
   // })
 
-  const response = await mailClient.sendEmailWithTemplate(
-    {
+  const response = await mailClient
+    .sendEmailWithTemplate({
       TemplateId: 17640272,
-      From: "matt@kahoy.org",
+      From: 'verification@kahoy.org',
       To: user.email,
       TemplateModel: {
-        product_name: "Animal Crossing Tasks",
+        product_name: 'Animal Crossing Tasks',
         action_url: `${process.env.ORIGIN}?token=${token}`,
         name: user.email,
-      }
-    }
-  ).then(response => {
-    console.log("Sending message");
-    console.log(response.To);
-    console.log(response.Message);
-  });
-
+      },
+    })
+    .then((response) => {
+      console.log('Sending message')
+      console.log(response.To)
+      console.log(response.Message)
+    })
 
   // update user with latest auth token
   await db.user.update({

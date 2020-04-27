@@ -1,9 +1,9 @@
-import getCurrentUser from "app/users/queries/getCurrentUser"
-import cookie from 'cookie';
-import createTask from "app/tasks/mutations/createTask";
+import getCurrentUser from 'app/users/queries/getCurrentUser'
+import cookie from 'cookie'
+import createTask from 'app/tasks/mutations/createTask'
 
 export const currentUser = async (req, res) => {
-  const cookies = cookie.parse(req.headers.cookie ?? '');
+  const cookies = cookie.parse(req.headers.cookie ?? '')
 
   const token = cookies['ac-tasks']
 
@@ -12,15 +12,17 @@ export const currentUser = async (req, res) => {
     throw new Error('Token Not Valid')
   }
 
-  const user = await getCurrentUser(token);
+  const user = await getCurrentUser(token)
 
-  return user;
+  return user
 }
 
 export default async (req, res) => {
-  const user = await currentUser(req, res);
+  const user = await currentUser(req, res)
 
-  const task = await createTask({ data: { ...req.body, user: { connect: { id: user.id } } } })
+  const task = await createTask({
+    data: { ...req.body, user: { connect: { id: user.id } } },
+  })
 
-  return res.json(task);
+  return res.json(task)
 }
