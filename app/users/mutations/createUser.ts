@@ -65,19 +65,12 @@ export default async function createUser(args: UserCreateArgs) {
   // find or create user by email
   const user = existingUser ? existingUser : await db.user.create(args)
 
-  // if (user.tasks)
-  await addStartingTasks(user.id)
+  if (!existingUser) {
+    await addStartingTasks(user.id)
+  }
 
   // create auth token
   const token = generateToken(user.email)
-
-  // email them auth token
-  // const response = await transport.sendMail({
-  //   from: 'm.wood0904@gmail.com',
-  //   to: user.email,
-  //   subject: 'Sign In to Animal Crossing Daily Tasks',
-  //   html: `<a href="${process.env.ORIGIN}?token=${token}">Sign In</a>`,
-  // })
 
   if (process.env.NODE_ENV === "production") {
     await mailClient.sendEmailWithTemplate({
