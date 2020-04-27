@@ -1,31 +1,43 @@
 import React, { useState } from 'react'
-import { Flex, Checkbox, Stack, Button, Input } from 'minerva-ui'
+import { Flex, Checkbox, Stack, Button, Input, Icon } from 'minerva-ui'
 import axios from 'axios'
 
 export default function Checklist({ initialItems = [] }) {
   const [items, setItems] = useState(initialItems)
-  console.log({ items })
 
   function handleChange(index, changes) {
     const updatedItems = [...items]
     updatedItems[index] = {
       ...updatedItems[index],
       ...changes,
-      // checked: !updatedItems[index].checked,
     }
     setItems(updatedItems)
   }
 
   async function updateTask(task) {
-    const res = await axios.post('/api/tasks/update', task)
-    console.log({ res })
+    await axios.post('/api/tasks/update', task)
   }
 
   async function addItem() {
+    // optimistic updating
+    const tempId = Date.now();
+    const updatedItems = [...items, { id: tempId, name: '' }]
+    setItems(updatedItems);
+
     const res = await axios.post('/api/tasks/new', {
       name: '',
     })
-    setItems([...items, res.data])
+
+    const itemIndex = updatedItems.findIndex(item => item.id === tempId);
+    // fix ID on response
+    updatedItems[itemIndex] = { ...updatedItems[itemIndex], id: res.data.id }
+    setItems([...updatedItems])
+  }
+
+  async function removeTask(task) {
+    const updatedItems = [...items].filter(item => item.id !== task.id);
+    setItems(updatedItems);
+    const res = await axios.post('/api/tasks/delete', { id: task.id })
   }
 
   return (
@@ -52,6 +64,9 @@ export default function Checklist({ initialItems = [] }) {
             onBlur={() => updateTask(item)}
             py={1}
           />
+          <Button p={2} bg="transparent" borderBottom={0} borderRadius="full" ml={1} _hover={{ bg: 'cool-gray.200' }} _active={{ bg: 'cool-gray.300' }} onClick={() => removeTask(item)}>
+            <Icon name="x" size="18px" />
+          </Button>
         </Flex>
       ))}
       <Button onClick={addItem}>Add Task</Button>
