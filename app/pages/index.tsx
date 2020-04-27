@@ -11,7 +11,7 @@ const Home = ({ user, ...props }) => {
   return (
     <div className="container">
       <Head>
-        <title>ac-daily-tasks</title>
+        <title>Froggy Chores</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

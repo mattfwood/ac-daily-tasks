@@ -1,6 +1,6 @@
 import React from "react"
 import Checklist from "./Checklist"
-import { Tabs, Tab, TabList, TabPanel, TabPanels } from "minerva-ui"
+import { Tabs, Tab, TabList, TabPanel, TabPanels, Stack } from "minerva-ui"
 
 const CustomTab = (props) => (
   <Tab
@@ -27,10 +27,12 @@ export default function ListView({ user }) {
   return (
     <Tabs>
       <TabList>
-        <CustomTab>Fossils</CustomTab>
-        <CustomTab>Resources</CustomTab>
-        <CustomTab>Rocks</CustomTab>
-        <CustomTab>Other</CustomTab>
+        <Stack horizontal>
+          <CustomTab>Fossils</CustomTab>
+          <CustomTab>Resources</CustomTab>
+          <CustomTab>Rocks</CustomTab>
+          <CustomTab>Other</CustomTab>
+        </Stack>
       </TabList>
       <TabPanels>
         <TabPanel>

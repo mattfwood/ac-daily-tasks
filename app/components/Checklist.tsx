@@ -40,12 +40,17 @@ export default function Checklist({ initialItems = [], category }) {
     await axios.post("/api/tasks/delete", { id: task.id })
   }
 
+  // console.log(items);
+
+  // const sortedItems = items.sort((a, b) => getTime(new Date(b.created_at)) - getTime(new Date(a.created_at)))
+  const sortedItems = items.sort((a, b) => a.id - b.id)
+
   return (
     <Stack>
       <Heading as="h2" fontSize="3xl" textTransform="capitalize">
         {category}
       </Heading>
-      {items.map((item, index) => (
+      {sortedItems.map((item, index) => (
         <Flex key={index}>
           <Checkbox
             fontSize="18px"
