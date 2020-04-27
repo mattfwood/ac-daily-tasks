@@ -30,7 +30,7 @@ export default async function createUser(args: UserCreateArgs) {
       From: 'verification@kahoy.org',
       To: user.email,
       TemplateModel: {
-        product_name: 'Animal Crossing Tasks',
+        product_name: 'Froggy Chore',
         action_url: `${process.env.ORIGIN}?token=${token}`,
         name: user.email,
       },
