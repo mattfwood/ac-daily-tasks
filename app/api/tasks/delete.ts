@@ -8,9 +8,9 @@ export default async (req, res) => {
   const user = await currentUser(req, res)
   const { id } = req.body
 
-  console.log({ id, })
+  console.log({ id })
 
-  const task = await getTask({ where: { id: id } });
+  const task = await getTask({ where: { id: id } })
   console.log({ task })
 
   if (task.userId !== user.id) {
@@ -19,7 +19,7 @@ export default async (req, res) => {
 
   await db.task.delete({
     where: { id },
-  });
+  })
 
   return res.json({ success: true, message: 'Task Deleted' })
 }
