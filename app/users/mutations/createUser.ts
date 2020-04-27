@@ -27,7 +27,7 @@ export default async function createUser(args: UserCreateArgs) {
   const response = await mailClient.sendEmailWithTemplate(
     {
       TemplateId: 17640272,
-      From: "matt@cratebind.com",
+      From: "matt@kahoy.org",
       To: user.email,
       TemplateModel: {
         product_name: "Animal Crossing Tasks",
