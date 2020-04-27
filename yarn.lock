@@ -6009,10 +6009,10 @@ min-indent@^1.0.0:
   resolved "https://registry.yarnpkg.com/min-indent/-/min-indent-1.0.0.tgz#cfc45c37e9ec0d8f0a0ec3dd4ef7f7c3abe39256"
   integrity sha1-z8RcN+nsDY8KDsPdTvf3w6vjklY=
 
-minerva-ui@3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/minerva-ui/-/minerva-ui-3.4.3.tgz#19ae14f7a2dd43ec675543a2265f4f31ffb580d0"
-  integrity sha512-yqri5e61+37sW8duNyImIzyzRmJSv+ybYBkdGJtYGFrBnM5YBudYDWgn263Sc+ueBG3YG0BMx/iSd/UnkD56Hg==
+minerva-ui@3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/minerva-ui/-/minerva-ui-3.4.5.tgz#551fd8cc38cebf412bef90ad17b4bc06131d66db"
+  integrity sha512-Rpjb8E2PsyW4hYdAxf7CPFDwVHHy/kSr319Q0gLO8Habj2KXOoRdf45JMyKx9JqE0sFS6wmTtyw5A5ymb79wYg==
   dependencies:
     "@mdx-js/react" "^1.5.1"
     "@reach/checkbox" "^0.8.6"
