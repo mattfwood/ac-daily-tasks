@@ -3,14 +3,20 @@
     "DATABASE_URL": "@database_url",
     "POSTMARK_TOKEN": "@postmark_token",
     "ORIGIN": "@origin",
-    "JWT_SECRET": "@jwt_secret"
+    "JWT_SECRET": "@jwt_secret",
+    "SENTRY_DSN": "@sentry_dsn",
+    "SENTRY_ORG": "@sentry_org",
+    "SENTRY_PROJECT": "@sentry_project"
   },
   "build": {
     "env": {
       "DATABASE_URL": "@database_url",
       "POSTMARK_TOKEN": "@postmark_token",
       "ORIGIN": "@origin",
-      "JWT_SECRET": "@jwt_secret"
+      "JWT_SECRET": "@jwt_secret",
+      "SENTRY_DSN": "@sentry_dsn",
+      "SENTRY_ORG": "@sentry_org",
+      "SENTRY_PROJECT": "@sentry_project"
     }
   }
 }
