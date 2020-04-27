@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { Flex, Checkbox, Stack, Button, Input, Icon } from 'minerva-ui'
-import axios from 'axios'
+import React, { useState } from "react"
+import { Flex, Checkbox, Stack, Button, Input, Icon, Heading } from "minerva-ui"
+import axios from "axios"
 
-export default function Checklist({ initialItems = [] }) {
-  const [items, setItems] = useState(initialItems)
+export default function Checklist({ initialItems = [], category }) {
+  const [items, setItems] = useState(initialItems.filter((item) => item.category === category))
 
   function handleChange(index, changes) {
     const updatedItems = [...items]
@@ -15,17 +15,17 @@ export default function Checklist({ initialItems = [] }) {
   }
 
   async function updateTask(task) {
-    await axios.post('/api/tasks/update', task)
+    await axios.post("/api/tasks/update", task)
   }
 
   async function addItem() {
     // optimistic updating
     const tempId = Date.now()
-    const updatedItems = [...items, { id: tempId, name: '' }]
+    const updatedItems = [...items, { id: tempId, name: "", category }]
     setItems(updatedItems)
 
-    const res = await axios.post('/api/tasks/new', {
-      name: '',
+    const res = await axios.post("/api/tasks/new", {
+      name: "",
     })
 
     const itemIndex = updatedItems.findIndex((item) => item.id === tempId)
@@ -37,20 +37,21 @@ export default function Checklist({ initialItems = [] }) {
   async function removeTask(task) {
     const updatedItems = [...items].filter((item) => item.id !== task.id)
     setItems(updatedItems)
-    const res = await axios.post('/api/tasks/delete', { id: task.id })
+    await axios.post("/api/tasks/delete", { id: task.id })
   }
 
   return (
     <Stack>
+      <Heading as="h2" fontSize="3xl" textTransform="capitalize">
+        {category}
+      </Heading>
       {items.map((item, index) => (
         <Flex key={index}>
           <Checkbox
             fontSize="18px"
             onChange={() => {
               const changes = {
-                completed_at: item.completed_at
-                  ? null
-                  : new Date().toISOString(),
+                completed_at: item.completed_at ? null : new Date().toISOString(),
               }
               handleChange(index, changes)
               updateTask({ ...item, ...changes })
@@ -70,8 +71,8 @@ export default function Checklist({ initialItems = [] }) {
             borderBottom={0}
             borderRadius="full"
             ml={1}
-            _hover={{ bg: 'cool-gray.200' }}
-            _active={{ bg: 'cool-gray.300' }}
+            _hover={{ bg: "cool-gray.200" }}
+            _active={{ bg: "cool-gray.300" }}
             onClick={() => removeTask(item)}
           >
             <Icon name="x" size="18px" />

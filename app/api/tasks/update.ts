@@ -1,8 +1,8 @@
-import { currentUser } from './new'
-import updateTask from 'app/tasks/mutations/updateTask'
+import { currentUser } from "./new"
+import updateTask from "app/tasks/mutations/updateTask"
 
 export default async (req, res) => {
-  const user = await currentUser(req, res)
+  await currentUser(req, res)
   const { id, userId, ...changes } = req.body
 
   const task = await updateTask({
