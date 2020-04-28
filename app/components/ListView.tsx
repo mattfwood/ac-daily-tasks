@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Checklist from "./Checklist";
-import { Heading, Flex, Box, Icon } from "minerva-ui";
+import { Heading, Flex, Box, Icon, Image } from "minerva-ui";
 import {
   Accordion,
   AccordionItem,
@@ -25,7 +25,9 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
     justifyContent="space-between"
     width="100%"
     alignItems="center"
-    py={2}
+    bg="gray.200"
+    borderRadius="lg"
+    p={3}
     my={2}
   >
     <Heading as="h2" fontSize="2xl" textTransform="capitalize">
@@ -35,13 +37,66 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
   </Flex>
 );
 
-const SECTION_COUNT = 4;
+const SectionHeading = ({ children, ...props }) => (
+  <Flex alignItems="center">
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="full"
+      height="40px"
+      width="40px"
+      bg="white"
+      mr={2}
+      shadow="base"
+    >
+      <Image maxWidth="30px" {...props} />
+    </Flex>
+    {children}
+  </Flex>
+);
 
-const sections = ["fossils", "locations", "resources", "other"];
+const sections = [
+  {
+    key: "fossils",
+    label: (
+      <SectionHeading src="/museum.png" alt="animal crossing museum">
+        {" "}
+        Fossils
+      </SectionHeading>
+    ),
+  },
+  {
+    key: "locations",
+    label: (
+      <SectionHeading src="/townhall.png" alt="animal crossing townhall">
+        {" "}
+        Locations
+      </SectionHeading>
+    ),
+  },
+  {
+    key: "resources",
+    label: (
+      <SectionHeading src="/apple.png" alt="animal crossing apple icon">
+        {" "}
+        Resources
+      </SectionHeading>
+    ),
+  },
+  {
+    key: "other",
+    label: (
+      <SectionHeading src="/leaf.png" alt="animal crossing leaf icon">
+        {" "}
+        Other
+      </SectionHeading>
+    ),
+  },
+];
 
 export default function ListView({ user }) {
   const [activeSections, setActiveSections] = useState([
-    ...new Array(SECTION_COUNT).fill(null).map((_, index) => index),
+    ...new Array(sections.length).fill(null).map((_, index) => index),
   ]);
 
   function toggleItem(toggledIndex) {
@@ -57,12 +112,12 @@ export default function ListView({ user }) {
   return (
     <Accordion index={activeSections} onChange={toggleItem}>
       {sections.map((section, index) => (
-        <AccordionItem key={section}>
+        <AccordionItem key={section.key}>
           <AccordionHeading active={activeSections.includes(index)}>
-            {section}
+            {section.label}
           </AccordionHeading>
           <AccordionPanel>
-            <Checklist initialItems={user.tasks} category={section} />
+            <Checklist initialItems={user.tasks} category={section.key} />
           </AccordionPanel>
         </AccordionItem>
       ))}

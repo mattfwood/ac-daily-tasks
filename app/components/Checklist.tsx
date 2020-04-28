@@ -6,7 +6,15 @@ import Cookie from "cookie";
 import { COOKIE_KEY } from "app/utils/constants";
 import CustomCheckbox from "./CustomCheckbox";
 
-export default function Checklist({ initialItems = [], category }) {
+export interface ChecklistProps {
+  category: string;
+  initialItems: any;
+}
+
+export default function Checklist({
+  initialItems = [],
+  category,
+}: ChecklistProps) {
   const [items, setItems] = useState(
     initialItems.filter((item) => item.category === category)
   );

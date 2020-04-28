@@ -1,7 +1,7 @@
-import db, { UserCreateArgs } from "db"
-import { generateToken } from "app/utils/generateToken"
+import db, { UserCreateArgs } from "db";
+import { generateToken } from "app/utils/generateToken";
 // import { transport } from 'app/utils/transport'
-import mailClient from "app/utils/email"
+import mailClient from "app/utils/email";
 
 const initialTasks = [
   {
@@ -25,6 +25,18 @@ const initialTasks = [
     category: "fossils",
   },
   {
+    name: "Check Nook's Cranny",
+    category: "locations",
+  },
+  {
+    name: "Check Abel Sisters",
+    category: "locations",
+  },
+  {
+    name: "Check ATM for Nook Miles",
+    category: "locations",
+  },
+  {
     name: "Find Money Rock",
     category: "resources",
   },
@@ -38,21 +50,21 @@ const initialTasks = [
   },
   {
     name: "Rock 1",
-    category: "rocks",
+    category: "resources",
   },
   {
     name: "Rock 2",
-    category: "rocks",
+    category: "resources",
   },
-]
+];
 
 export async function addStartingTasks(id) {
   const user = await db.user.update({
     where: { id: id },
     data: { tasks: { create: initialTasks } },
-  })
+  });
 
-  return user
+  return user;
 }
 
 export default async function createUser(args: UserCreateArgs) {
@@ -60,17 +72,17 @@ export default async function createUser(args: UserCreateArgs) {
     where: {
       email: args.data.email,
     },
-  })
+  });
 
   // find or create user by email
-  const user = existingUser ? existingUser : await db.user.create(args)
+  const user = existingUser ? existingUser : await db.user.create(args);
 
   if (!existingUser) {
-    await addStartingTasks(user.id)
+    await addStartingTasks(user.id);
   }
 
   // create auth token
-  const token = generateToken(user.email)
+  const token = generateToken(user.email);
 
   if (process.env.NODE_ENV === "production") {
     await mailClient.sendEmailWithTemplate({
@@ -82,7 +94,7 @@ export default async function createUser(args: UserCreateArgs) {
         action_url: `${process.env.ORIGIN}?token=${token}`,
         name: user.email,
       },
-    })
+    });
   }
 
   // update user with latest auth token
@@ -93,7 +105,7 @@ export default async function createUser(args: UserCreateArgs) {
     data: {
       token,
     },
-  })
+  });
 
-  return { success: true, url: `${process.env.ORIGIN}?token=${token}` }
+  return { success: true, url: `${process.env.ORIGIN}?token=${token}` };
 }
