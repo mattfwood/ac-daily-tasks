@@ -15,7 +15,7 @@ const DropdownArrow = ({ active }) => (
       transition: "180ms all ease",
     }}
   >
-    <Icon name="chevron-down" color="gray.500" size="24px" />
+    <Icon name="chevron-down" color="#374151" size="24px" />
   </Box>
 );
 
@@ -24,13 +24,15 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
     as={AccordionButton}
     justifyContent="space-between"
     width="100%"
+    fontFamily="BalooBold"
     alignItems="center"
-    bg="gray.200"
+    bg="#89C68A"
     borderRadius="lg"
+    // borderBottom="2px dashed #86612D"
     p={3}
     my={2}
   >
-    <Heading as="h2" fontSize="2xl" textTransform="capitalize">
+    <Heading as="h2" fontSize="2xl" textTransform="capitalize" color="#fff">
       {children}
     </Heading>
     <DropdownArrow active={active} />

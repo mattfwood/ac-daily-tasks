@@ -68,7 +68,7 @@ export default function Checklist({
   return (
     <Stack mb={4}>
       {sortedItems.map((item, index) => (
-        <Flex key={index}>
+        <Flex key={index} py={1}>
           <CustomCheckbox
             onChange={() => {
               const changes = {
@@ -80,8 +80,6 @@ export default function Checklist({
               handleUpdate({ ...item, ...changes });
             }}
             checked={!!item.completed_at}
-            height="20px"
-            width="20px"
             lineHeight="1"
           />
           {/* <Checkbox
@@ -103,9 +101,18 @@ export default function Checklist({
             onBlur={() => handleUpdate(item)}
             borderColor="transparent"
             py={1}
+            mx={1}
+            fontSize="16px"
             paddingLeft={1}
+            backgroundColor="transparent"
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.target.blur();
+              }
+            }}
             // @ts-ignore
             _focus={{
+              backgroundColor: "white",
               borderColor: "inherit",
             }}
           />
@@ -115,8 +122,8 @@ export default function Checklist({
             borderBottom={0}
             borderRadius="full"
             ml={1}
-            _hover={{ bg: "cool-gray.200" }}
-            _active={{ bg: "cool-gray.300" }}
+            _hover={{ bg: "#89C68A" }}
+            _active={{ bg: "#89C68A" }}
             onClick={() => removeTask(item)}
           >
             <Icon name="x" size="18px" />

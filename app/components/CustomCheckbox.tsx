@@ -22,18 +22,19 @@ const ControlBox = ({ checked, ...props }) => (
     justifyContent="center"
     borderStyle="solid"
     borderWidth="1px"
-    borderRadius="4px"
+    borderRadius="9999px"
     width="24px"
     height="24px"
     marginRight="8px"
     padding="2px"
     transition="background-color 120ms ease 0s, box-shadow 250ms ease 0s"
-    borderColor={checked ? "#fff" : "#ecebed"}
+    borderColor={checked ? "primary" : "#ecebed"}
     color={checked ? "#fff" : "transparent"}
     backgroundColor={checked ? "primary" : "#fff"}
     cursor="pointer"
     _checked={{
       backgroundColor: "#000",
+      // borderColor: 'primary'
     }}
     _focus={{
       borderColor: "#a4cafe",

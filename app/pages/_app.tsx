@@ -10,7 +10,7 @@ const customTheme = {
   ...defaultTheme,
   Button: {
     ...defaultTheme.Button,
-    borderRadius: "10px",
+    borderRadius: "100px",
     bg: "primary",
     color: "white",
     border: 0,
