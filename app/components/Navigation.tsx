@@ -1,6 +1,6 @@
 import React from "react";
 import NextLink from "next/link";
-import { Flex, Box } from "minerva-ui";
+import { Flex, Box, Image } from "minerva-ui";
 
 const NavLink = ({ children, ...props }: any) => (
   <NextLink {...props}>
@@ -22,7 +22,7 @@ export default function Navigation({ user }: any) {
     >
       <Flex>
         <NavLink href="/">
-          <Box
+          <Flex
             // fontWeight="bold"
             fontFamily="BalooBold"
             color="#fff"
@@ -30,10 +30,12 @@ export default function Navigation({ user }: any) {
             fontSize="xl"
             mr={3}
             minWidth="initial"
+            alignItems="center"
             flex="0 0 auto"
           >
+            <Image src="/chair.png" alt="froggy chores logo" maxWidth="40px" />
             Froggy Chores
-          </Box>
+          </Flex>
         </NavLink>
         {/* <Flex
           flexGrow={1}
