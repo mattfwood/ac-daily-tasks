@@ -92,7 +92,7 @@ export default async function createUser(args: UserCreateArgs) {
       From: "verification@kahoy.org",
       To: user.email,
       TemplateModel: {
-        product_name: "Froggy Chore",
+        product_name: "Froggy Chores",
         action_url: `${process.env.ORIGIN}?token=${token}`,
         name: user.email,
       },
