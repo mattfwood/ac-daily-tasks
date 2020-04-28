@@ -15,7 +15,7 @@ const DropdownArrow = ({ active }) => (
       transition: "180ms all ease",
     }}
   >
-    <Icon name="chevron-down" color="gray.400" size="24px" />
+    <Icon name="chevron-down" color="gray.500" size="24px" />
   </Box>
 );
 
@@ -26,6 +26,7 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
     width="100%"
     alignItems="center"
     py={2}
+    my={2}
   >
     <Heading as="h2" fontSize="2xl" textTransform="capitalize">
       {children}
@@ -65,30 +66,6 @@ export default function ListView({ user }) {
           </AccordionPanel>
         </AccordionItem>
       ))}
-      {/* <AccordionItem>
-        <AccordionHeading active={activeSections.includes(0)}>
-          Fossils
-        </AccordionHeading>
-        <AccordionPanel>
-          <Checklist initialItems={user.tasks} category="fossils" />
-        </AccordionPanel>
-      </AccordionItem>
-      <AccordionItem>
-        <AccordionHeading>
-            Resources
-        </AccordionHeading>
-        <AccordionPanel>
-          <Checklist initialItems={user.tasks} category="resources" />
-        </AccordionPanel>
-      </AccordionItem>
-      <AccordionItem>
-        <AccordionHeading>
-            Rocks
-        </AccordionHeading>
-        <AccordionPanel>
-          <Checklist initialItems={user.tasks} category="rocks" />
-        </AccordionPanel>
-      </AccordionItem> */}
     </Accordion>
   );
 }

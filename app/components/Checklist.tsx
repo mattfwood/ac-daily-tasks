@@ -58,7 +58,7 @@ export default function Checklist({ initialItems = [], category }) {
   const sortedItems = items.sort((a, b) => a.id - b.id);
 
   return (
-    <Stack>
+    <Stack mb={4}>
       {sortedItems.map((item, index) => (
         <Flex key={index}>
           <CustomCheckbox
