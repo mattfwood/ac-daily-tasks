@@ -36,7 +36,7 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
 
 const SECTION_COUNT = 4;
 
-const sections = ["fossils", "resources", "rocks"];
+const sections = ["fossils", "locations", "resources", "other"];
 
 export default function ListView({ user }) {
   const [activeSections, setActiveSections] = useState([
