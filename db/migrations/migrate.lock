@@ -11,3 +11,5 @@
 20200426143701-add_task_created_at
 20200427080534-add_task_category
 20200427141059-add_task_user_relation
+20200427234821-update_user_tasks
+20200427235006-revert_user_tasks_name

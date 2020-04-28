@@ -4,7 +4,7 @@ generator client {
 
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Task {
@@ -22,5 +22,5 @@ model User {
   id    Int     @default(autoincrement()) @id
   name  String?
   token String? @unique
-  tasks Task[]
+  Tasks Task[]
 }
