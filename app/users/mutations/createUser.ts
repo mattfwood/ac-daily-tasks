@@ -75,6 +75,7 @@ export default async function createUser(args: UserCreateArgs) {
   });
 
   // find or create user by email
+  // @TODO: set this a different way?
   const user = existingUser ? existingUser : await db.user.create(args);
 
   if (!existingUser) {
@@ -82,7 +83,8 @@ export default async function createUser(args: UserCreateArgs) {
   }
 
   // create auth token
-  const token = generateToken(user.email);
+  // @TODO:
+  const token = user.token ? user.token : generateToken(user.email);
 
   if (process.env.NODE_ENV === "production") {
     await mailClient.sendEmailWithTemplate({
