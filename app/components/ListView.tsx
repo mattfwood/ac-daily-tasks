@@ -1,54 +1,94 @@
-import React from "react"
-import Checklist from "./Checklist"
-import { Tabs, Tab, TabList, TabPanel, TabPanels, Stack } from "minerva-ui"
+import React, { useState } from "react";
+import Checklist from "./Checklist";
+import { Heading, Flex, Box, Icon } from "minerva-ui";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@reach/accordion";
 
-const CustomTab = (props) => (
-  <Tab
-    fontWeight={800}
-    fontSize="20px"
-    _focus={{
-      color: "primary",
-      outline: 0,
-      boxShadow: "0 0 0 3px rgba(118,169,250,.45)",
-      borderWidth: "2px",
+const DropdownArrow = ({ active }) => (
+  <Box
+    style={{
+      transform: `rotate(${active ? -180 : 0}deg)`,
+      transition: "180ms all ease",
     }}
-    _selected={{
-      color: "primary",
-      outline: 0,
-      borderWidth: "2px",
-      borderBottom: "2px solid currentColor",
-    }}
-    {...props}
-  />
-)
+  >
+    <Icon name="chevron-down" color="gray.400" size="24px" />
+  </Box>
+);
+
+const AccordionHeading = ({ children, active = false, ...props }) => (
+  <Flex
+    as={AccordionButton}
+    justifyContent="space-between"
+    width="100%"
+    alignItems="center"
+    py={2}
+  >
+    <Heading as="h2" fontSize="2xl" textTransform="capitalize">
+      {children}
+    </Heading>
+    <DropdownArrow active={active} />
+  </Flex>
+);
+
+const SECTION_COUNT = 4;
+
+const sections = ["fossils", "resources", "rocks"];
 
 export default function ListView({ user }) {
-  // console.log(user)
+  const [activeSections, setActiveSections] = useState([
+    ...new Array(SECTION_COUNT).fill(null).map((_, index) => index),
+  ]);
+
+  function toggleItem(toggledIndex) {
+    if (activeSections.includes(toggledIndex)) {
+      setActiveSections(
+        activeSections.filter((currentIndex) => currentIndex !== toggledIndex)
+      );
+    } else {
+      setActiveSections([...activeSections, toggledIndex].sort());
+    }
+  }
+
   return (
-    // @ts-ignore
-    <Tabs defaultIndex={0}>
-      <TabList>
-        <Stack horizontal>
-          <CustomTab>Fossils</CustomTab>
-          <CustomTab>Resources</CustomTab>
-          <CustomTab>Rocks</CustomTab>
-          <CustomTab>Other</CustomTab>
-        </Stack>
-      </TabList>
-      <TabPanels>
-        <TabPanel>
+    <Accordion index={activeSections} onChange={toggleItem}>
+      {sections.map((section, index) => (
+        <AccordionItem>
+          <AccordionHeading active={activeSections.includes(index)}>
+            {section}
+          </AccordionHeading>
+          <AccordionPanel>
+            <Checklist initialItems={user.tasks} category={section} />
+          </AccordionPanel>
+        </AccordionItem>
+      ))}
+      {/* <AccordionItem>
+        <AccordionHeading active={activeSections.includes(0)}>
+          Fossils
+        </AccordionHeading>
+        <AccordionPanel>
           <Checklist initialItems={user.tasks} category="fossils" />
-        </TabPanel>
-        <TabPanel>
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem>
+        <AccordionHeading>
+            Resources
+        </AccordionHeading>
+        <AccordionPanel>
           <Checklist initialItems={user.tasks} category="resources" />
-        </TabPanel>
-        <TabPanel>
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem>
+        <AccordionHeading>
+            Rocks
+        </AccordionHeading>
+        <AccordionPanel>
           <Checklist initialItems={user.tasks} category="rocks" />
-        </TabPanel>
-        <TabPanel>
-          <Checklist initialItems={user.tasks} category="other" />
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
-  )
+        </AccordionPanel>
+      </AccordionItem> */}
+    </Accordion>
+  );
 }

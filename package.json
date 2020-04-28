@@ -9,10 +9,6 @@
   "browserslist": [
     "defaults"
   ],
-  "prettier": {
-    "semi": false,
-    "printWidth": 110
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && pretty-quick --staged",
@@ -27,6 +23,9 @@
   "dependencies": {
     "@prisma/cli": "2.0.0-beta.3",
     "@prisma/client": "2.0.0-beta.3",
+    "@reach/accordion": "0.10.1",
+    "@reach/checkbox": "0.10.1",
+    "@reach/tabs": "0.10.1",
     "@sentry/browser": "^5.1.0",
     "@sentry/node": "^5.6.2",
     "@sentry/webpack-plugin": "1.11.1",

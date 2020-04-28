@@ -1,10 +1,11 @@
-import cookie from 'cookie'
+import cookie from "cookie";
+import { COOKIE_KEY } from "./constants";
 
 export const serializeCookie = (token: string) =>
-  cookie.serialize('ac-tasks', token, {
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+  cookie.serialize(COOKIE_KEY, token, {
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
     maxAge: 72576000,
-    httpOnly: true,
-    path: '/',
-  })
+    httpOnly: false,
+    path: "/",
+  });

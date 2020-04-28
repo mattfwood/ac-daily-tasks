@@ -1,6 +1,6 @@
-import React from 'react'
-import NextLink from 'next/link'
-import { Flex, Box, Stack } from 'minerva-ui'
+import React from "react";
+import NextLink from "next/link";
+import { Flex, Box } from "minerva-ui";
 
 const NavLink = ({ children, ...props }: any) => (
   <NextLink {...props}>
@@ -8,7 +8,7 @@ const NavLink = ({ children, ...props }: any) => (
       {children}
     </Box>
   </NextLink>
-)
+);
 
 export default function Navigation({ user }: any) {
   return (
@@ -23,7 +23,8 @@ export default function Navigation({ user }: any) {
       <Flex>
         <NavLink href="/">
           <Box
-            fontWeight="bold"
+            // fontWeight="bold"
+            fontFamily="BalooBold"
             color="#fff"
             m={0}
             fontSize="xl"
@@ -31,10 +32,10 @@ export default function Navigation({ user }: any) {
             minWidth="initial"
             flex="0 0 auto"
           >
-            AC Daily Tasks
+            Froggy Chores
           </Box>
         </NavLink>
-        <Flex
+        {/* <Flex
           flexGrow={1}
           flex={1}
           width="auto"
@@ -43,12 +44,12 @@ export default function Navigation({ user }: any) {
           overflowX="auto"
         >
           <Stack horizontal>
-            {/* <NavLink href="#">Collections</NavLink> */}
-            {/* <NavLink href="/villagers">Villagers</NavLink> */}
+            <NavLink href="#">Collections</NavLink>
+            <NavLink href="/villagers">Villagers</NavLink>
           </Stack>
-        </Flex>
+        </Flex> */}
       </Flex>
-      <Flex color="white">{user?.email}</Flex>
+      <Flex color="white">{user ? "Sign Out" : ""}</Flex>
     </Flex>
-  )
+  );
 }
