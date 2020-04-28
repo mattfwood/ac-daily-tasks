@@ -56,7 +56,7 @@ export default function ListView({ user }) {
   return (
     <Accordion index={activeSections} onChange={toggleItem}>
       {sections.map((section, index) => (
-        <AccordionItem>
+        <AccordionItem key={section}>
           <AccordionHeading active={activeSections.includes(index)}>
             {section}
           </AccordionHeading>

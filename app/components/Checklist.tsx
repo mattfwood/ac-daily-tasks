@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Stack, Button, Input, Icon } from "minerva-ui";
+import { Flex, Stack, Button, Input, Icon, Box } from "minerva-ui";
 import axios from "axios";
 import updateTask from "app/tasks/mutations/updateTask";
 import Cookie from "cookie";
@@ -115,6 +115,11 @@ export default function Checklist({ initialItems = [], category }) {
           </Button>
         </Flex>
       ))}
+      {sortedItems.length === 0 && (
+        <Box color="gray.400" textAlign="center" py={2}>
+          No Tasks Yet
+        </Box>
+      )}
       <Button onClick={addItem}>Add Task</Button>
     </Stack>
   );
