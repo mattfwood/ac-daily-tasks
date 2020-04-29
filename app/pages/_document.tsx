@@ -4,8 +4,8 @@ import {
   DocumentHead,
   Main,
   NextScript /*DocumentContext*/,
-} from "@blitzjs/core";
-import { ServerStyleSheet } from "styled-components";
+} from '@blitzjs/core';
+import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
   // Only uncomment if you need to customize this behaviour

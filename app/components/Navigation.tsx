@@ -1,10 +1,10 @@
-import React from "react";
-import NextLink from "next/link";
-import { Flex, Box, Image } from "minerva-ui";
+import React from 'react';
+import NextLink from 'next/link';
+import { Flex, Box, Image } from 'minerva-ui';
 
 const NavLink = ({ children, ...props }: any) => (
   <NextLink {...props}>
-    <Box as="a" color="white">
+    <Box as="a" color="white" cursor="pointer">
       {children}
     </Box>
   </NextLink>
@@ -20,7 +20,7 @@ export default function Navigation({ user }: any) {
       justifyContent="space-between"
       as="header"
     >
-      <Flex>
+      <Flex alignItems="center">
         <NavLink href="/">
           <Flex
             // fontWeight="bold"
@@ -37,6 +37,7 @@ export default function Navigation({ user }: any) {
             Froggy Chores
           </Flex>
         </NavLink>
+
         {/* <Flex
           flexGrow={1}
           flex={1}
@@ -50,8 +51,9 @@ export default function Navigation({ user }: any) {
             <NavLink href="/villagers">Villagers</NavLink>
           </Stack>
         </Flex> */}
+        <NavLink href="/villagers">Villagers</NavLink>
       </Flex>
-      <Flex color="white">{user ? "Sign Out" : ""}</Flex>
+      <Flex color="white">{user ? 'Sign Out' : ''}</Flex>
     </Flex>
   );
 }

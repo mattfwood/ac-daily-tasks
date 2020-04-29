@@ -1,19 +1,19 @@
-const axios = require("axios");
-const fs = require("fs");
-const villagers = require("./villagers.json");
+const axios = require('axios');
+const fs = require('fs');
+const villagers = require('./villagers.json');
 // http://acnhapi.com/icons/villagers/1
 
 const download_image = (url, image_path) =>
   axios({
     url,
-    responseType: "stream",
+    responseType: 'stream',
   }).then(
     (response) =>
       new Promise((resolve, reject) => {
         response.data
           .pipe(fs.createWriteStream(image_path))
-          .on("finish", () => resolve())
-          .on("error", (e) => reject(e));
+          .on('finish', () => resolve())
+          .on('error', (e) => reject(e));
       })
   );
 
@@ -26,7 +26,7 @@ async function start() {
     const villager = villagers[key];
     await download_image(
       `http://acnhapi.com/icons/villagers/${villager.id}`,
-      `data/villagers/${villager.name["name-en"]}.png`
+      `data/villagers/${villager.name['name-en']}.png`
     );
     // wait one second after each request
     await wait(1000);

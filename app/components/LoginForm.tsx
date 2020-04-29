@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button, Input, Flex, Alert } from "minerva-ui";
-import createUser from "app/users/mutations/createUser";
+import React, { useState } from 'react';
+import { Button, Input, Flex, Alert } from 'minerva-ui';
+import createUser from 'app/users/mutations/createUser';
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState('');
   // const router = useRouter()
 
   // useEffect(() => {
@@ -30,7 +30,7 @@ export default function LoginForm() {
     try {
       const res = await createUser({ data: { email } });
 
-      if (process.env.NODE_ENV !== "production") {
+      if (process.env.NODE_ENV !== 'production') {
         // when developing locally, just go to the token route instead of sending an email
         window.location.href = res.url;
       }

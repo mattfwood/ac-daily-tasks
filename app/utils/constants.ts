@@ -1,1 +1,1 @@
-export const COOKIE_KEY = "froggy-chair";
+export const COOKIE_KEY = 'froggy-chair';

@@ -1,7 +1,7 @@
-import React from "react";
-import { Flex, PseudoBox, Icon } from "minerva-ui";
-import { CustomCheckboxContainer, CustomCheckboxInput } from "@reach/checkbox";
-import styled from "styled-components";
+import React from 'react';
+import { Flex, PseudoBox, Icon } from 'minerva-ui';
+import { CustomCheckboxContainer, CustomCheckboxInput } from '@reach/checkbox';
+import styled from 'styled-components';
 
 const VisuallyHidden = styled(PseudoBox)`
   border: 0px;
@@ -28,17 +28,17 @@ const ControlBox = ({ checked, ...props }) => (
     marginRight="8px"
     padding="2px"
     transition="background-color 120ms ease 0s, box-shadow 250ms ease 0s"
-    borderColor={checked ? "primary" : "#ecebed"}
-    color={checked ? "#fff" : "transparent"}
-    backgroundColor={checked ? "primary" : "#fff"}
+    borderColor={checked ? 'primary' : '#ecebed'}
+    color={checked ? '#fff' : 'transparent'}
+    backgroundColor={checked ? 'primary' : '#fff'}
     cursor="pointer"
     _checked={{
-      backgroundColor: "#000",
+      backgroundColor: '#000',
       // borderColor: 'primary'
     }}
     _focus={{
-      borderColor: "#a4cafe",
-      boxShadow: "0 0 0 3px rgba(118,169,250,.45)",
+      borderColor: '#a4cafe',
+      boxShadow: '0 0 0 3px rgba(118,169,250,.45)',
       outline: 0,
     }}
     {...props}

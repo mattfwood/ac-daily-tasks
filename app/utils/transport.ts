@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 export const transport = nodemailer.createTransport({
   host: 'smtp.mailtrap.io',
@@ -7,4 +7,4 @@ export const transport = nodemailer.createTransport({
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
-})
+});

@@ -5,8 +5,8 @@ import Navigation from 'app/components/Navigation';
 import Page from 'app/components/Page';
 import getCurrentUser from 'app/users/queries/getCurrentUser';
 import { serializeCookie } from 'app/utils/cookies';
-import ListView from 'app/components/ListView';
 import { COOKIE_KEY } from 'app/utils/constants';
+import VillagerView from 'app/components/VillagerView';
 
 const Home = ({ user, ...props }) => {
   return (
@@ -37,7 +37,7 @@ const Home = ({ user, ...props }) => {
       <Navigation user={user} />
 
       <main>
-        <Page>{!user ? <LoginForm /> : <ListView user={user} />}</Page>
+        <Page>{!user ? <LoginForm /> : <VillagerView user={user} />}</Page>
       </main>
 
       <footer />

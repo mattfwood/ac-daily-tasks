@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Flex, Stack, Button, Input, Icon, Box } from "minerva-ui";
-import axios from "axios";
-import updateTask from "app/tasks/mutations/updateTask";
-import Cookie from "cookie";
-import { COOKIE_KEY } from "app/utils/constants";
-import CustomCheckbox from "./CustomCheckbox";
+import React, { useState } from 'react';
+import { Flex, Stack, Button, Input, Icon, Box } from 'minerva-ui';
+import axios from 'axios';
+import updateTask from 'app/tasks/mutations/updateTask';
+import Cookie from 'cookie';
+import { COOKIE_KEY } from 'app/utils/constants';
+import CustomCheckbox from './CustomCheckbox';
 
 export interface ChecklistProps {
   category: string;
@@ -41,11 +41,11 @@ export default function Checklist({
   async function addItem() {
     // optimistic updating
     const tempId = Date.now();
-    const updatedItems = [...items, { id: tempId, name: "", category }];
+    const updatedItems = [...items, { id: tempId, name: '', category }];
     setItems(updatedItems);
 
-    const res = await axios.post("/api/tasks/new", {
-      name: "",
+    const res = await axios.post('/api/tasks/new', {
+      name: '',
     });
 
     const itemIndex = updatedItems.findIndex((item) => item.id === tempId);
@@ -57,7 +57,7 @@ export default function Checklist({
   async function removeTask(task) {
     const updatedItems = [...items].filter((item) => item.id !== task.id);
     setItems(updatedItems);
-    await axios.post("/api/tasks/delete", { id: task.id });
+    await axios.post('/api/tasks/delete', { id: task.id });
   }
 
   // console.log(items);
@@ -82,19 +82,6 @@ export default function Checklist({
             checked={!!item.completed_at}
             lineHeight="1"
           />
-          {/* <Checkbox
-            onChange={() => {
-              const changes = {
-                completed_at: item.completed_at ? null : new Date().toISOString(),
-              }
-              handleChange(index, changes)
-              handleUpdate({ ...item, ...changes })
-            }}
-            checked={!!item.completed_at}
-            height="20px"
-            width="20px"
-            lineHeight="1"
-          /> */}
           <Input
             value={item.name}
             onChange={(e) => handleChange(index, { name: e.target.value })}
@@ -106,14 +93,14 @@ export default function Checklist({
             paddingLeft={1}
             backgroundColor="transparent"
             onKeyPress={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 e.target.blur();
               }
             }}
             // @ts-ignore
             _focus={{
-              backgroundColor: "white",
-              borderColor: "inherit",
+              backgroundColor: 'white',
+              borderColor: 'inherit',
             }}
           />
           <Button
@@ -122,8 +109,8 @@ export default function Checklist({
             borderBottom={0}
             borderRadius="full"
             ml={1}
-            _hover={{ bg: "#89C68A" }}
-            _active={{ bg: "#89C68A" }}
+            _hover={{ bg: '#89C68A' }}
+            _active={{ bg: '#89C68A' }}
             onClick={() => removeTask(item)}
           >
             <Icon name="x" size="18px" />

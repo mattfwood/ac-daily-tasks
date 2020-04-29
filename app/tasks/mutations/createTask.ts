@@ -1,7 +1,12 @@
-import db, { TaskCreateArgs } from 'db'
+import db from 'db';
 
-export default async function createTask(args: TaskCreateArgs) {
-  const task = await db.task.create(args)
+export default async function createTask(args: any) {
+  const { data, token } = args;
+  const user = await db.user.findOne({ where: { token } });
 
-  return task
+  const task = await db.task.create({
+    data: { ...data, User: { connect: { id: user.id } } },
+  });
+
+  return task;
 }

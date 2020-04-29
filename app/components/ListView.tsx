@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import Checklist from "./Checklist";
-import { Heading, Flex, Box, Icon, Image } from "minerva-ui";
+import React, { useState } from 'react';
+import Checklist from './Checklist';
+import { Heading, Flex, Box, Icon, Image } from 'minerva-ui';
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-} from "@reach/accordion";
+} from '@reach/accordion';
 
 const DropdownArrow = ({ active }) => (
   <Box
     style={{
       transform: `rotate(${active ? -180 : 0}deg)`,
-      transition: "180ms all ease",
+      transition: '180ms all ease',
     }}
   >
     <Icon name="chevron-down" color="#374151" size="24px" />
@@ -59,37 +59,37 @@ const SectionHeading = ({ children, ...props }) => (
 
 const sections = [
   {
-    key: "fossils",
+    key: 'fossils',
     label: (
       <SectionHeading src="/museum.png" alt="animal crossing museum">
-        {" "}
+        {' '}
         Fossils
       </SectionHeading>
     ),
   },
   {
-    key: "locations",
+    key: 'locations',
     label: (
       <SectionHeading src="/townhall.png" alt="animal crossing townhall">
-        {" "}
+        {' '}
         Locations
       </SectionHeading>
     ),
   },
   {
-    key: "resources",
+    key: 'resources',
     label: (
       <SectionHeading src="/apple.png" alt="animal crossing apple icon">
-        {" "}
+        {' '}
         Resources
       </SectionHeading>
     ),
   },
   {
-    key: "other",
+    key: 'other',
     label: (
       <SectionHeading src="/leaf.png" alt="animal crossing leaf icon">
-        {" "}
+        {' '}
         Other
       </SectionHeading>
     ),

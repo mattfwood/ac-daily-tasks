@@ -1,13 +1,4 @@
-import db from "db";
-
-// export default async function updateTask(args: TaskUpdateArgs) {
-//   // Don't allow updating ID
-//   delete args.data.id;
-
-//   const task = await db.task.update(args)
-
-//   return task
-// }
+import db from 'db';
 
 export default async function updateTask(args: any) {
   const { token, where, data } = args;
@@ -19,7 +10,7 @@ export default async function updateTask(args: any) {
   ]);
 
   if (task.userId !== user.id) {
-    throw new Error("You do not have permission to edit this task.");
+    throw new Error('You do not have permission to edit this task.');
   }
 
   delete data.id;

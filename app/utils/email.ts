@@ -1,8 +1,8 @@
-const postmark = require('postmark')
+const postmark = require('postmark');
 
-const mailClient = new postmark.ServerClient(process.env.POSTMARK_TOKEN)
+const mailClient = new postmark.ServerClient(process.env.POSTMARK_TOKEN);
 
-export default mailClient
+export default mailClient;
 
 // client.sendEmail(
 //   {
