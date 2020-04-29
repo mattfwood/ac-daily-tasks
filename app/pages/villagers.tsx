@@ -7,8 +7,22 @@ import getCurrentUser from 'app/users/queries/getCurrentUser';
 import { serializeCookie } from 'app/utils/cookies';
 import { COOKIE_KEY } from 'app/utils/constants';
 import VillagerView from 'app/components/VillagerView';
+import { useState } from 'react';
 
-const Home = ({ user, ...props }) => {
+const getToken = () => {
+  const cookies = cookie.parse(document.cookie);
+  return cookies?.[COOKIE_KEY];
+}
+
+const Home = ({ user: initialUser, ...props }) => {
+  const [user, setUser] = useState(initialUser)
+
+  async function refetchUser() {
+    const token = cookie.parse(document.cookie)[COOKIE_KEY];
+    const data = await getCurrentUser(token);
+    setUser(data)
+  }
+
   return (
     <div className="container">
       <Head>
@@ -37,7 +51,7 @@ const Home = ({ user, ...props }) => {
       <Navigation user={user} />
 
       <main>
-        <Page>{!user ? <LoginForm /> : <VillagerView user={user} />}</Page>
+        <Page>{!user ? <LoginForm /> : <VillagerView user={user} refetchUser={refetchUser} />}</Page>
       </main>
 
       <footer />

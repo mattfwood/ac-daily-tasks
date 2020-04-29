@@ -18,9 +18,15 @@ import updateTask from "app/tasks/mutations/updateTask";
 
 const villagers = Object.values(villagerData);
 
-export default function VillagerView({ user }) {
+const getToken = () => {
+  const cookies = Cookie.parse(process.browser ? document.cookie : '');
+  return cookies?.[COOKIE_KEY];
+}
+
+export default function VillagerView({ user, refetchUser }) {
   const [search, setSearch] = useState("");
   const [hoverId, setHoverId] = useState(null);
+  const token = getToken();
   const activeVillagers = user.tasks
     .filter((task) => task.category === "villager")
     .map((villagerTask) => {
@@ -35,9 +41,6 @@ export default function VillagerView({ user }) {
     });
 
   async function addVillager(villager) {
-    const cookie = Cookie.parse(document.cookie);
-    const token = cookie[COOKIE_KEY];
-
     await createTask({
       data: {
         name: villager.id.toString(),
@@ -45,6 +48,8 @@ export default function VillagerView({ user }) {
       },
       token,
     });
+
+    await refetchUser();
 
     // console.log({ res });
   }
@@ -67,8 +72,11 @@ export default function VillagerView({ user }) {
   const results = villagers.filter(
     (villager) =>
       search.length !== 0 &&
+      !activeVillagers.some(activeVillager => activeVillager.villagerName === villager.name['name-en']) &&
       villager.name["name-en"].toLowerCase().includes(search.toLowerCase())
   );
+
+  console.log({ villagers, activeVillagers })
 
   return (
     <>
@@ -96,8 +104,8 @@ export default function VillagerView({ user }) {
               />
               <CustomCheckbox
                 position="absolute"
-                top="5px"
-                right="5px"
+                top="-5px"
+                right="-5px"
                 checked={!!villager.completed_at}
                 onChange={async () => {
                   await updateTask({
@@ -107,7 +115,9 @@ export default function VillagerView({ user }) {
                         ? null
                         : new Date().toISOString(),
                     },
+                    token,
                   });
+                  await refetchUser();
                   // console.log({ res });
                 }}
               />
