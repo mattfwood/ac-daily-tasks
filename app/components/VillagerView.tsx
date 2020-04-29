@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Flex,
   Box,
@@ -8,19 +8,19 @@ import {
   Input,
   Button,
   Heading,
-} from "minerva-ui";
-import Cookie from "cookie";
-import villagerData from "../../villagers.json";
-import createTask from "app/tasks/mutations/createTask";
-import { COOKIE_KEY } from "app/utils/constants";
-import CustomCheckbox from "./CustomCheckbox";
-import updateTask from "app/tasks/mutations/updateTask";
-import axios from "axios";
+} from 'minerva-ui';
+import Cookie from 'cookie';
+import villagerData from '../../villagers.json';
+import createTask from 'app/tasks/mutations/createTask';
+import { COOKIE_KEY } from 'app/utils/constants';
+import CustomCheckbox from './CustomCheckbox';
+import updateTask from 'app/tasks/mutations/updateTask';
+import axios from 'axios';
 
 const villagers = Object.values(villagerData);
 
 export const getToken = () => {
-  const cookies = Cookie.parse(process.browser ? document.cookie : "");
+  const cookies = Cookie.parse(process.browser ? document.cookie : '');
   return cookies?.[COOKIE_KEY];
 };
 
@@ -30,20 +30,20 @@ const HeaderButton = (props) => (
     borderBottom={0}
     variant="secondary"
     color="#FF524A"
-    _hover={{ bg: "transparent", textDecoration: "underline" }}
-    _active={{ bg: "transparent" }}
+    _hover={{ bg: 'transparent', textDecoration: 'underline' }}
+    _active={{ bg: 'transparent' }}
     {...props}
   />
 );
 
 export default function VillagerView({ user, refetchUser }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   // const [hoverId, setHoverId] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
 
   const token = getToken();
   const activeVillagers = user.tasks
-    .filter((task) => task.category === "villager")
+    .filter((task) => task.category === 'villager')
     .map((villagerTask) => {
       const data = villagers.find(
         (villager) => villager.id === parseInt(villagerTask.name)
@@ -51,7 +51,7 @@ export default function VillagerView({ user, refetchUser }) {
       return {
         ...data,
         ...villagerTask,
-        villagerName: data.name["name-en"],
+        villagerName: data.name['name-en'],
       };
     });
 
@@ -59,7 +59,7 @@ export default function VillagerView({ user, refetchUser }) {
     await createTask({
       data: {
         name: villager.id.toString(),
-        category: "villager",
+        category: 'villager',
       },
       token,
     });
@@ -70,7 +70,7 @@ export default function VillagerView({ user, refetchUser }) {
   }
 
   async function removeVillager(villager) {
-    await axios.post("/api/tasks/delete", { id: villager.id });
+    await axios.post('/api/tasks/delete', { id: villager.id });
 
     await refetchUser();
   }
@@ -81,9 +81,9 @@ export default function VillagerView({ user, refetchUser }) {
       search.length !== 0 &&
       !activeVillagers.some(
         (activeVillager) =>
-          activeVillager.villagerName === villager.name["name-en"]
+          activeVillager.villagerName === villager.name['name-en']
       ) &&
-      villager.name["name-en"].toLowerCase().includes(search.toLowerCase())
+      villager.name['name-en'].toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -127,7 +127,7 @@ export default function VillagerView({ user, refetchUser }) {
                   bg="white"
                   color=""
                   borderRadius="full"
-                  _hover={{ bg: "white" }}
+                  _hover={{ bg: 'white' }}
                   onClick={() => removeVillager(villager)}
                 >
                   <Icon size="16px" name="x" color="#FF524A" />
@@ -154,7 +154,7 @@ export default function VillagerView({ user, refetchUser }) {
                 />
               )}
             </Box>
-            {villager.name["name-en"]}
+            {villager.name['name-en']}
           </Flex>
         ))}
       </Stack>
@@ -183,10 +183,10 @@ export default function VillagerView({ user, refetchUser }) {
             color="#374151"
             onClick={() => addVillager(villager)}
             _active={{
-              bg: "transparent",
+              bg: 'transparent',
             }}
             _hover={{
-              bg: "transparent",
+              bg: 'transparent',
             }}
           >
             <Box
@@ -196,7 +196,7 @@ export default function VillagerView({ user, refetchUser }) {
               position="relative"
             >
               <Image
-                src={`/villagers/${villager.name["name-en"]}.png`}
+                src={`/villagers/${villager.name['name-en']}.png`}
                 alt="villager icon"
               />
               {/* {hoverId === villager.id && (
@@ -215,7 +215,7 @@ export default function VillagerView({ user, refetchUser }) {
                 </Button>
               )} */}
             </Box>
-            {villager.name["name-en"]}
+            {villager.name['name-en']}
           </Button>
         ))}
         {results.length === 0 && search.length > 0 && (

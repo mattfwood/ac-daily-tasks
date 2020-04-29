@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import NextLink from "next/link";
+import React, { useState } from 'react';
+import NextLink from 'next/link';
 import {
   Flex,
   Box,
@@ -9,10 +9,10 @@ import {
   ModalBody,
   Icon,
   Text,
-} from "minerva-ui";
-import Cookies from "js-cookie";
-import { useRouter } from "blitz";
-import { COOKIE_KEY } from "app/utils/constants";
+} from 'minerva-ui';
+import Cookies from 'js-cookie';
+import { useRouter } from 'blitz';
+import { COOKIE_KEY } from 'app/utils/constants';
 
 const NavLink = ({ children, ...props }: any) => (
   <NextLink {...props}>
@@ -101,11 +101,11 @@ export default function Navigation({ user }: any) {
         onClose={() => setModalOpen(false)}
         overflow="hidden"
         style={{
-          backgroundColor: "transparent",
-          marginTop: "10px",
-          height: "90vh",
-          display: "flex",
-          justifyContent: "center",
+          backgroundColor: 'transparent',
+          marginTop: '10px',
+          height: '90vh',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <Box
@@ -138,8 +138,8 @@ export default function Navigation({ user }: any) {
             top="-15px"
             right="-15px"
             p={2}
-            _hover={{ bg: "rgba(0, 0, 0, 0.3)" }}
-            _active={{ bg: "rgba(0, 0, 0, 0.3)" }}
+            _hover={{ bg: 'rgba(0, 0, 0, 0.3)' }}
+            _active={{ bg: 'rgba(0, 0, 0, 0.3)' }}
           >
             <Icon name="x" />
           </Button>
@@ -155,7 +155,7 @@ export default function Navigation({ user }: any) {
                 href="/"
                 onClick={() => {
                   Cookies.remove(COOKIE_KEY);
-                  router.push("/");
+                  router.push('/');
                 }}
                 iconName="log-out"
                 bg="#89C68A"

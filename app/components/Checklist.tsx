@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Flex, Stack, Button, Input, Icon, Box } from "minerva-ui";
-import axios from "axios";
-import updateTask from "app/tasks/mutations/updateTask";
-import createTask from "app/tasks/mutations/createTask";
-import Cookie from "cookie";
-import { COOKIE_KEY } from "app/utils/constants";
-import CustomCheckbox from "./CustomCheckbox";
-import { getToken } from "./VillagerView";
+import React, { useState } from 'react';
+import { Flex, Stack, Button, Input, Icon, Box } from 'minerva-ui';
+import axios from 'axios';
+import updateTask from 'app/tasks/mutations/updateTask';
+import createTask from 'app/tasks/mutations/createTask';
+import Cookie from 'cookie';
+import { COOKIE_KEY } from 'app/utils/constants';
+import CustomCheckbox from './CustomCheckbox';
+import { getToken } from './VillagerView';
 
 export interface ChecklistProps {
   category: string;
@@ -43,13 +43,13 @@ export default function Checklist({
   async function addItem() {
     // optimistic updating
     const tempId = Date.now();
-    const updatedItems = [...items, { id: tempId, name: "", category }];
+    const updatedItems = [...items, { id: tempId, name: '', category }];
     setItems(updatedItems);
 
     const token = getToken();
     const task = await createTask({
       data: {
-        name: "",
+        name: '',
         category: category,
       },
       token,
@@ -64,7 +64,7 @@ export default function Checklist({
   async function removeTask(task) {
     const updatedItems = [...items].filter((item) => item.id !== task.id);
     setItems(updatedItems);
-    await axios.post("/api/tasks/delete", { id: task.id });
+    await axios.post('/api/tasks/delete', { id: task.id });
   }
 
   // console.log(items);
@@ -100,14 +100,14 @@ export default function Checklist({
             paddingLeft={1}
             backgroundColor="transparent"
             onKeyPress={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 e.target.blur();
               }
             }}
             // @ts-ignore
             _focus={{
-              backgroundColor: "white",
-              borderColor: "inherit",
+              backgroundColor: 'white',
+              borderColor: 'inherit',
             }}
           />
           <Button
@@ -116,8 +116,8 @@ export default function Checklist({
             borderBottom={0}
             borderRadius="full"
             ml={1}
-            _hover={{ bg: "#89C68A" }}
-            _active={{ bg: "#89C68A" }}
+            _hover={{ bg: '#89C68A' }}
+            _active={{ bg: '#89C68A' }}
             onClick={() => removeTask(item)}
           >
             <Icon name="x" size="18px" />
