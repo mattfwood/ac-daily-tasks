@@ -62,7 +62,7 @@ const Home = ({ user: initialUser, ...props }) => {
           font-family: "Baloo";
           src: url("/fonts/Baloo2-Regular.ttf");
           font-weight: bold;
-          font-display: fallback;
+          font-display: auto;
           font-style: normal;
         }
 
@@ -70,7 +70,7 @@ const Home = ({ user: initialUser, ...props }) => {
           font-family: "BalooBold";
           src: url("/fonts/Baloo2-Bold.ttf");
           font-weight: bold;
-          font-display: fallback;
+          font-display: auto;
           font-style: normal;
         }
 
