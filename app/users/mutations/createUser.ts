@@ -5,23 +5,23 @@ import mailClient from 'app/utils/email';
 
 const initialTasks = [
   {
-    name: 'Fossil 1',
+    name: 'Fossil #1',
     category: 'fossils',
   },
   {
-    name: 'Fossil 2',
+    name: 'Fossil #2',
     category: 'fossils',
   },
   {
-    name: 'Fossil 3',
+    name: 'Fossil #3',
     category: 'fossils',
   },
   {
-    name: 'Fossil 4',
+    name: 'Fossil #4',
     category: 'fossils',
   },
   {
-    name: 'Fossil 5',
+    name: 'Fossil #5',
     category: 'fossils',
   },
   {
@@ -49,11 +49,11 @@ const initialTasks = [
     category: 'resources',
   },
   {
-    name: 'Rock 1',
+    name: 'Rock #1',
     category: 'resources',
   },
   {
-    name: 'Rock 2',
+    name: 'Rock #2',
     category: 'resources',
   },
 ];

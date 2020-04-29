@@ -10,14 +10,14 @@ import {
   Heading,
 } from 'minerva-ui';
 import Cookie from 'cookie';
-import villagerData from '../../villagers.json';
+import villagers from '../../formatted-villagers.json';
 import createTask from 'app/tasks/mutations/createTask';
 import { COOKIE_KEY } from 'app/utils/constants';
 import CustomCheckbox from './CustomCheckbox';
 import updateTask from 'app/tasks/mutations/updateTask';
 import axios from 'axios';
 
-const villagers = Object.values(villagerData);
+// const villagers = Object.values(villagerData);
 
 export const getToken = () => {
   const cookies = Cookie.parse(process.browser ? document.cookie : '');
@@ -46,27 +46,24 @@ export default function VillagerView({ user, refetchUser }) {
     .filter((task) => task.category === 'villager')
     .map((villagerTask) => {
       const data = villagers.find(
-        (villager) => villager.id === parseInt(villagerTask.name)
+        (villager) => villager.name === villagerTask.name
       );
       return {
         ...data,
         ...villagerTask,
-        villagerName: data.name['name-en'],
       };
     });
 
   async function addVillager(villager) {
     await createTask({
       data: {
-        name: villager.id.toString(),
+        name: villager.name,
         category: 'villager',
       },
       token,
     });
 
     await refetchUser();
-
-    // console.log({ res });
   }
 
   async function removeVillager(villager) {
@@ -80,10 +77,9 @@ export default function VillagerView({ user, refetchUser }) {
     (villager) =>
       search.length !== 0 &&
       !activeVillagers.some(
-        (activeVillager) =>
-          activeVillager.villagerName === villager.name['name-en']
+        (activeVillager) => activeVillager.name === villager.name
       ) &&
-      villager.name['name-en'].toLowerCase().includes(search.toLowerCase())
+      villager.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -115,7 +111,7 @@ export default function VillagerView({ user, refetchUser }) {
               position="relative"
             >
               <Image
-                src={`/villagers/${villager.villagerName}.png`}
+                src={`/villagers/${villager.name}.png`}
                 alt="villager icon"
               />
               {deleteMode ? (
@@ -154,7 +150,7 @@ export default function VillagerView({ user, refetchUser }) {
                 />
               )}
             </Box>
-            {villager.name['name-en']}
+            {villager.name}
           </Flex>
         ))}
       </Stack>
@@ -196,7 +192,7 @@ export default function VillagerView({ user, refetchUser }) {
               position="relative"
             >
               <Image
-                src={`/villagers/${villager.name['name-en']}.png`}
+                src={`/villagers/${villager.name}.png`}
                 alt="villager icon"
               />
               {/* {hoverId === villager.id && (
@@ -215,7 +211,7 @@ export default function VillagerView({ user, refetchUser }) {
                 </Button>
               )} */}
             </Box>
-            {villager.name['name-en']}
+            {villager.name}
           </Button>
         ))}
         {results.length === 0 && search.length > 0 && (

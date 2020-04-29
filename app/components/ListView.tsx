@@ -49,7 +49,7 @@ const SectionHeading = ({ children, ...props }) => (
       width="40px"
       bg="white"
       mr={2}
-      shadow="base"
+      // shadow="base"
     >
       <Image maxWidth="30px" {...props} />
     </Flex>
