@@ -7301,6 +7301,11 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
+"promise-nodeify@>= 0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/promise-nodeify/-/promise-nodeify-3.0.1.tgz#f0f5d9720ee9ec71dd2bfa92667be504c10229c2"
+  integrity sha512-ghsSuzZXJX8iO7WVec2z7GI+Xk/EyiD+JZK7AZKhUqYfpLa/Zs4ylUD+CwwnKlG6G3HnkUPMAi6PO7zeqGKssg==
+
 prop-types-exact@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/prop-types-exact/-/prop-types-exact-1.2.0.tgz#825d6be46094663848237e3925a98c6e944e9869"
@@ -7323,6 +7328,11 @@ proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
+
+"proxying-agent@>= 2.1":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/proxying-agent/-/proxying-agent-2.4.0.tgz#6796549fc46bf3423554440f64a4449220f9014d"
+  integrity sha512-b9vDqIcViJZVsWPpQlp9Py74u+Wqd0a+kMkkg7zX58mwNtrNbOChNlRTM7lUrlpiwNzyJCV8+5D8rnZYLDFh7Q==
 
 prr@~1.0.1:
   version "1.0.1"
@@ -8722,6 +8732,14 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tinify@1.6.0-beta.2:
+  version "1.6.0-beta.2"
+  resolved "https://registry.yarnpkg.com/tinify/-/tinify-1.6.0-beta.2.tgz#5985ca021d11685d846c53ac8465dce78116adfe"
+  integrity sha512-jzOtntNLiRRhMN5AlRlxapUhNYVH3YhU2cfk3Xg2u5g+t4ZfdXe97TqYvIl7cyenfXmqo5SCZet7t4alv53XvQ==
+  dependencies:
+    promise-nodeify ">= 0.1"
+    proxying-agent ">= 2.1"
 
 tmp@^0.0.33:
   version "0.0.33"

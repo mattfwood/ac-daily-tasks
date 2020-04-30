@@ -41,6 +41,10 @@ const initialTasks = [
     category: 'resources',
   },
   {
+    name: 'Find Message in a Bottle',
+    category: 'resources',
+  },
+  {
     name: 'Plant Money Tree',
     category: 'resources',
   },

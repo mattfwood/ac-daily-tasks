@@ -10,6 +10,7 @@ import {
   Heading,
 } from 'minerva-ui';
 import Cookie from 'cookie';
+import { compareDesc, parseISO } from 'date-fns';
 import villagers from '../../formatted-villagers.json';
 import createTask from 'app/tasks/mutations/createTask';
 import { COOKIE_KEY } from 'app/utils/constants';
@@ -57,6 +58,11 @@ export default function VillagerView() {
       };
     });
 
+  const sortedActiveVillagers = activeVillagers.sort((a, b) => {
+    // @ts-ignore
+    return compareDesc(parseISO(b.created_at), parseISO(a.created_at));
+  });
+
   async function addVillager(villager) {
     await createTask({
       data: {
@@ -100,7 +106,7 @@ export default function VillagerView() {
         )}
       </Flex>
       <Stack horizontal flexWrap="wrap" justifyContent="center">
-        {activeVillagers.map((villager) => (
+        {sortedActiveVillagers.map((villager) => (
           <Flex
             key={villager.id}
             flexDirection="column"
