@@ -103,6 +103,7 @@ const sections = [
 ];
 
 export default function ListView() {
+  const [isLoading, setIsLoading] = useState(false);
   const [activeSections, setActiveSections] = useState([
     ...new Array(sections.length).fill(null).map((_, index) => index),
   ]);
@@ -122,12 +123,15 @@ export default function ListView() {
   return (
     <>
       <Button
+        isLoading={isLoading}
         width="100%"
         onClick={async () => {
           const cookie = Cookie.parse(document.cookie);
           const token = cookie[COOKIE_KEY];
+          setIsLoading(true);
           await resetTasks({ token });
           await refetch();
+          setIsLoading(false);
         }}
       >
         Reset Tasks
