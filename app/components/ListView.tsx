@@ -17,7 +17,6 @@ import {
 } from '@reach/disclosure';
 import { useQuery } from 'blitz';
 import Cookie from 'cookie';
-import { compareDesc, parseISO } from 'date-fns';
 import { COOKIE_KEY } from 'app/utils/constants';
 import { getToken } from './VillagerView';
 import getCurrentUser from 'app/users/queries/getCurrentUser';
@@ -91,10 +90,10 @@ function CustomCategoryForm({ refetch }) {
       token,
     });
 
-    await refetch();
-
     setIsLoading(false);
     setValue('');
+
+    await refetch();
   }
 
   return (
@@ -128,7 +127,8 @@ export default function ListView() {
   const [user, { refetch, updatedAt }] = useQuery(getCurrentUser, token);
   const sortedTasks = user.tasks.sort((a, b) => {
     // @ts-ignore
-    return compareDesc(parseISO(b.created_at), parseISO(a.created_at));
+    // return compareDesc(parseISO(b.created_at), parseISO(a.created_at));
+    return a.id - b.id;
   });
 
   const groupedTasks = sortedTasks.reduce((result, task) => {

@@ -42,6 +42,8 @@ export default function Checklist({
     // const token = cookie['ac-tasks'];
     const token = cookie[COOKIE_KEY];
     await updateTask({ where: { id: task.id }, data: { ...task }, token });
+    // @TODO: This causes issues like losing input focus, look into this later
+    // refetch();
   }
 
   async function addItem() {
