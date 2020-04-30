@@ -16,6 +16,8 @@ import { COOKIE_KEY } from 'app/utils/constants';
 import CustomCheckbox from './CustomCheckbox';
 import updateTask from 'app/tasks/mutations/updateTask';
 import axios from 'axios';
+import { useQuery } from 'blitz';
+import getCurrentUser from 'app/users/queries/getCurrentUser';
 
 // const villagers = Object.values(villagerData);
 
@@ -36,12 +38,13 @@ const HeaderButton = (props) => (
   />
 );
 
-export default function VillagerView({ user, refetchUser }) {
+export default function VillagerView() {
+  const token = getToken();
+  const [user, { refetch: refetchUser }] = useQuery(getCurrentUser, token);
   const [search, setSearch] = useState('');
   // const [hoverId, setHoverId] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  const token = getToken();
   const activeVillagers = user.tasks
     .filter((task) => task.category === 'villager')
     .map((villagerTask) => {

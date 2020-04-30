@@ -1,14 +1,15 @@
-import { Head, ssrQuery } from 'blitz';
+import { Head } from 'blitz';
 import cookie from 'cookie';
 import LoginForm from 'app/components/LoginForm';
 import Navigation from 'app/components/Navigation';
 import Page from 'app/components/Page';
-import getCurrentUser from 'app/users/queries/getCurrentUser';
 import { serializeCookie } from 'app/utils/cookies';
 import ListView from 'app/components/ListView';
 import { COOKIE_KEY } from 'app/utils/constants';
+import { Suspense } from 'react';
+import { Spinner, Flex } from 'minerva-ui';
 
-const Home = ({ user, ...props }) => {
+const Home = ({ loggedIn, ...props }) => {
   return (
     <div className="container">
       <Head>
@@ -34,10 +35,20 @@ const Home = ({ user, ...props }) => {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
 
-      <Navigation user={user} />
+      <Navigation />
 
       <main>
-        <Page>{!user ? <LoginForm /> : <ListView user={user} />}</Page>
+        <Page>
+          <Suspense
+            fallback={
+              <Flex justifyContent="center" p={6}>
+                <Spinner size="32px" />
+              </Flex>
+            }
+          >
+            {!loggedIn ? <LoginForm /> : <ListView />}
+          </Suspense>
+        </Page>
       </main>
 
       <footer />
@@ -105,22 +116,25 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const user: any = token
-    ? await ssrQuery(getCurrentUser, token, context)
-    : null;
+  // const user: any = token
+  //   ? await ssrQuery(getCurrentUser, token, context)
+  //   : null;
 
-  if (user) {
-    // @TODO: Fix this after finding datetime serialization workaround
-    user.tasks = user?.tasks?.map((task) => ({
-      ...task,
-      created_at: task.created_at.toISOString(),
-      completed_at: task?.completed_at?.toISOString() ?? null,
-    }));
-  }
+  const loggedIn = !!token;
+
+  // if (user) {
+  //   // @TODO: Fix this after finding datetime serialization workaround
+  //   user.tasks = user?.tasks?.map((task) => ({
+  //     ...task,
+  //     created_at: task.created_at.toISOString(),
+  //     completed_at: task?.completed_at?.toISOString() ?? null,
+  //   }));
+  // }
 
   return {
     props: {
-      user,
+      // user,
+      loggedIn,
     },
   };
 };

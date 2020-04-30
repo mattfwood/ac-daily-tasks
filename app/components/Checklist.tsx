@@ -11,11 +11,13 @@ import { getToken } from './VillagerView';
 export interface ChecklistProps {
   category: string;
   initialItems: any;
+  refetch: () => void;
 }
 
 export default function Checklist({
   initialItems = [],
   category,
+  refetch,
 }: ChecklistProps) {
   const [items, setItems] = useState(
     initialItems.filter((item) => item.category === category)

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import Checklist from './Checklist';
-import { Heading, Flex, Box, Icon, Image } from 'minerva-ui';
+import { Heading, Flex, Box, Icon, Image, Button } from 'minerva-ui';
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
 } from '@reach/accordion';
+import { useQuery } from 'blitz';
+import Cookie from 'cookie';
+import { COOKIE_KEY } from 'app/utils/constants';
+import { getToken } from './VillagerView';
+import getCurrentUser from 'app/users/queries/getCurrentUser';
+import resetTasks from 'app/tasks/mutations/resetTasks';
 
 const DropdownArrow = ({ active }) => (
   <Box
@@ -96,10 +102,12 @@ const sections = [
   },
 ];
 
-export default function ListView({ user }) {
+export default function ListView() {
   const [activeSections, setActiveSections] = useState([
     ...new Array(sections.length).fill(null).map((_, index) => index),
   ]);
+  const token = getToken();
+  const [user, { refetch, updatedAt }] = useQuery(getCurrentUser, token);
 
   function toggleItem(toggledIndex) {
     if (activeSections.includes(toggledIndex)) {
@@ -112,17 +120,36 @@ export default function ListView({ user }) {
   }
 
   return (
-    <Accordion index={activeSections} onChange={toggleItem}>
-      {sections.map((section, index) => (
-        <AccordionItem key={section.key}>
-          <AccordionHeading active={activeSections.includes(index)}>
-            {section.label}
-          </AccordionHeading>
-          <AccordionPanel>
-            <Checklist initialItems={user.tasks} category={section.key} />
-          </AccordionPanel>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <>
+      <Button
+        width="100%"
+        onClick={async () => {
+          const cookie = Cookie.parse(document.cookie);
+          const token = cookie[COOKIE_KEY];
+          await resetTasks({ token });
+          await refetch();
+        }}
+      >
+        Reset Tasks
+      </Button>
+      <Accordion index={activeSections} onChange={toggleItem}>
+        {sections.map((section, index) => (
+          <AccordionItem key={section.key}>
+            <AccordionHeading active={activeSections.includes(index)}>
+              {section.label}
+            </AccordionHeading>
+            <AccordionPanel>
+              <Checklist
+                // change key when data is refreshed to clear stale state
+                key={updatedAt}
+                initialItems={user.tasks}
+                category={section.key}
+                refetch={refetch}
+              />
+            </AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </>
   );
 }

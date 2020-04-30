@@ -1,22 +1,22 @@
-import { Head, ssrQuery } from 'blitz';
+import { Head } from 'blitz';
 import cookie from 'cookie';
 import LoginForm from 'app/components/LoginForm';
 import Navigation from 'app/components/Navigation';
 import Page from 'app/components/Page';
-import getCurrentUser from 'app/users/queries/getCurrentUser';
 import { serializeCookie } from 'app/utils/cookies';
 import { COOKIE_KEY } from 'app/utils/constants';
 import VillagerView from 'app/components/VillagerView';
-import { useState } from 'react';
+import { Suspense } from 'react';
+import { Flex, Spinner } from 'minerva-ui';
 
-const Home = ({ user: initialUser, ...props }) => {
-  const [user, setUser] = useState(initialUser);
+const Home = ({ loggedIn, ...props }) => {
+  // const [user, setUser] = useState(initialUser);
 
-  async function refetchUser() {
-    const token = cookie.parse(document.cookie)[COOKIE_KEY];
-    const data = await getCurrentUser(token);
-    setUser(data);
-  }
+  // async function refetchUser() {
+  //   const token = cookie.parse(document.cookie)[COOKIE_KEY];
+  //   const data = await getCurrentUser(token);
+  //   setUser(data);
+  // }
 
   return (
     <div className="container">
@@ -43,15 +43,19 @@ const Home = ({ user: initialUser, ...props }) => {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
 
-      <Navigation user={user} />
+      <Navigation />
 
       <main>
         <Page>
-          {!user ? (
-            <LoginForm />
-          ) : (
-            <VillagerView user={user} refetchUser={refetchUser} />
-          )}
+          <Suspense
+            fallback={
+              <Flex justifyContent="center" p={6}>
+                <Spinner size="32px" />
+              </Flex>
+            }
+          >
+            {!loggedIn ? <LoginForm /> : <VillagerView />}
+          </Suspense>
         </Page>
       </main>
 
@@ -120,22 +124,11 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const user: any = token
-    ? await ssrQuery(getCurrentUser, token, context)
-    : null;
-
-  if (user) {
-    // @TODO: Fix this after finding datetime serialization workaround
-    user.tasks = user?.tasks?.map((task) => ({
-      ...task,
-      created_at: task.created_at.toISOString(),
-      completed_at: task?.completed_at?.toISOString() ?? null,
-    }));
-  }
+  const loggedIn = !!token;
 
   return {
     props: {
-      user,
+      loggedIn,
     },
   };
 };

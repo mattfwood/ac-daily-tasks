@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import NextLink from 'next/link';
 import {
   Flex,
@@ -11,8 +11,10 @@ import {
   Text,
 } from 'minerva-ui';
 import Cookies from 'js-cookie';
-import { useRouter } from 'blitz';
+import { useRouter, useQuery } from 'blitz';
 import { COOKIE_KEY } from 'app/utils/constants';
+import { getToken } from './VillagerView';
+import getCurrentUser from 'app/users/queries/getCurrentUser';
 
 const NavLink = ({ children, ...props }: any) => (
   <NextLink {...props}>
@@ -49,53 +51,25 @@ const MenuLink = ({ children, iconName, href, ...props }: any) => (
   </Flex>
 );
 
-export default function Navigation({ user }: any) {
+const NavMenu = () => {
+  const token = getToken();
+  const [user] = useQuery(getCurrentUser, token);
   const [modalOpen, setModalOpen] = useState(false);
 
   const router = useRouter();
   return (
-    <Box>
-      <Flex
-        bg="primary"
-        color="#fff"
-        p={3}
-        alignItems="center"
-        justifyContent="space-between"
-        as="header"
-      >
-        <Flex alignItems="center">
-          <NavLink href="/">
-            <Flex
-              fontFamily="BalooBold"
-              color="#fff"
-              m={0}
-              fontSize="xl"
-              mr={3}
-              minWidth="initial"
-              alignItems="center"
-              flex="0 0 auto"
-            >
-              <Image
-                src="/chair.png"
-                alt="froggy chores logo"
-                maxWidth="40px"
-              />
-              Froggy Chores
-            </Flex>
-          </NavLink>
-        </Flex>
-        {!!user && (
-          <Button
-            onClick={() => setModalOpen(true)}
-            bg="transparent"
-            border={0}
-            borderBottom={0}
-            p={2}
-          >
-            <Icon name="menu" color="#fff" />
-          </Button>
-        )}
-      </Flex>
+    <>
+      {!!user && (
+        <Button
+          onClick={() => setModalOpen(true)}
+          bg="transparent"
+          border={0}
+          borderBottom={0}
+          p={1}
+        >
+          <Icon name="menu" color="#fff" />
+        </Button>
+      )}
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -166,6 +140,46 @@ export default function Navigation({ user }: any) {
           </ModalBody>
         </Box>
       </Modal>
+    </>
+  );
+};
+
+export default function Navigation() {
+  return (
+    <Box>
+      <Flex
+        bg="primary"
+        color="#fff"
+        p={3}
+        alignItems="center"
+        justifyContent="space-between"
+        as="header"
+      >
+        <Flex alignItems="center">
+          <NavLink href="/">
+            <Flex
+              fontFamily="BalooBold"
+              color="#fff"
+              m={0}
+              fontSize="xl"
+              mr={3}
+              minWidth="initial"
+              alignItems="center"
+              flex="0 0 auto"
+            >
+              <Image
+                src="/chair.png"
+                alt="froggy chores logo"
+                maxWidth="40px"
+              />
+              Froggy Chores
+            </Flex>
+          </NavLink>
+        </Flex>
+        <Suspense fallback={null}>
+          <NavMenu />
+        </Suspense>
+      </Flex>
     </Box>
   );
 }
