@@ -21,10 +21,6 @@ const initialTasks = [
     category: 'fossils',
   },
   {
-    name: 'Fossil #5',
-    category: 'fossils',
-  },
-  {
     name: "Check Nook's Cranny",
     category: 'locations',
   },
