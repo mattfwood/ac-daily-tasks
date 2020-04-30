@@ -38,6 +38,7 @@ export default function LoginForm() {
         "Great, you've just been emailed a link you can use to sign in"
       );
     } catch (error) {
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

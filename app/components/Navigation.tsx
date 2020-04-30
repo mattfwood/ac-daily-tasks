@@ -57,19 +57,20 @@ const NavMenu = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const router = useRouter();
+
+  if (!user) return null;
+
   return (
     <>
-      {!!user && (
-        <Button
-          onClick={() => setModalOpen(true)}
-          bg="transparent"
-          border={0}
-          borderBottom={0}
-          p={1}
-        >
-          <Icon name="menu" color="#fff" />
-        </Button>
-      )}
+      <Button
+        onClick={() => setModalOpen(true)}
+        bg="transparent"
+        border={0}
+        borderBottom={0}
+        p={1}
+      >
+        <Icon name="menu" color="#fff" />
+      </Button>
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
