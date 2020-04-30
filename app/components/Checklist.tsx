@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Flex, Stack, Button, Input, Icon, Box } from 'minerva-ui';
 import axios from 'axios';
 import updateTask from 'app/tasks/mutations/updateTask';
@@ -22,6 +22,8 @@ export default function Checklist({
   const [items, setItems] = useState(
     initialItems.filter((item) => item.category === category)
   );
+
+  const lastItemRef = useRef();
 
   function handleChange(index, changes) {
     const updatedItems = [...items];
@@ -61,6 +63,14 @@ export default function Checklist({
     // fix ID on response
     updatedItems[itemIndex] = { ...task };
     setItems([...updatedItems]);
+
+    // focus newly added item
+    if (!!lastItemRef && !!lastItemRef.current) {
+      setTimeout(() => {
+        // @ts-ignore
+        lastItemRef.current.focus();
+      }, 1);
+    }
   }
 
   async function removeTask(task) {
@@ -69,9 +79,6 @@ export default function Checklist({
     await axios.post('/api/tasks/delete', { id: task.id });
   }
 
-  // console.log(items);
-
-  // const sortedItems = items.sort((a, b) => getTime(new Date(b.created_at)) - getTime(new Date(a.created_at)))
   const sortedItems = items.sort((a, b) => a.id - b.id);
 
   return (
@@ -101,6 +108,7 @@ export default function Checklist({
             fontSize="16px"
             paddingLeft={1}
             backgroundColor="transparent"
+            ref={index === sortedItems.length - 1 ? lastItemRef : null}
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 e.target.blur();

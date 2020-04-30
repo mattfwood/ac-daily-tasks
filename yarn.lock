@@ -1190,16 +1190,6 @@
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.0.0-beta.3.tgz#a1b2cce4744973481d2891fcb919ab099f118952"
   integrity sha512-itwRDl9PS8pD9InbHFeh1m3kyMibpZbkMHx9/Q7lNVaxvBJeJjNlVFmclL9AIFMDAUhD+KtspqkBwUHKgJpd7g==
 
-"@reach/accordion@0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@reach/accordion/-/accordion-0.10.1.tgz#bf99eae9b343a33ac5df020b9c56da7e907021b2"
-  integrity sha512-hhiLp08dhce4OsEtoLhXsqtIqZi6W4us2wHsuvQUgf6w7h1UIGtAMXl2/k4lzynwBtYSIY4fuqktzGgFGVwa4w==
-  dependencies:
-    "@reach/auto-id" "^0.10.1"
-    "@reach/descendants" "^0.10.1"
-    "@reach/utils" "^0.10.1"
-    tslib "^1.11.1"
-
 "@reach/auto-id@^0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.10.1.tgz#5c8f7573d6271e0e55df04e459a1d1d1cf11a216"
@@ -1258,6 +1248,15 @@
     react-focus-lock "^2.2.1"
     react-remove-scroll "^2.2.0"
     tslib "^1.10.0"
+
+"@reach/disclosure@0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@reach/disclosure/-/disclosure-0.10.1.tgz#971cee76032074cb72895b096470992301490133"
+  integrity sha512-2hMPpCCVLClSdsxHwQzSiZB04ws1vyTPbuHXPmcJW27irOPh2JSDq6T611qNKqg6avhBFolUD7O9ZWwV5bDQow==
+  dependencies:
+    "@reach/auto-id" "^0.10.1"
+    "@reach/utils" "^0.10.1"
+    tslib "^1.11.1"
 
 "@reach/machine@^0.10.1":
   version "0.10.1"

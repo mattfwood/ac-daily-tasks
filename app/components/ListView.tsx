@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import Checklist from './Checklist';
-import { Heading, Flex, Box, Icon, Image, Button } from 'minerva-ui';
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from '@reach/accordion';
+  Heading,
+  Flex,
+  Box,
+  Icon,
+  Image,
+  Button,
+  Input,
+  Stack,
+} from 'minerva-ui';
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@reach/disclosure';
 import { useQuery } from 'blitz';
 import Cookie from 'cookie';
+import { compareDesc, parseISO } from 'date-fns';
 import { COOKIE_KEY } from 'app/utils/constants';
 import { getToken } from './VillagerView';
 import getCurrentUser from 'app/users/queries/getCurrentUser';
 import resetTasks from 'app/tasks/mutations/resetTasks';
+import createTask from 'app/tasks/mutations/createTask';
 
 const DropdownArrow = ({ active }) => (
   <Box
@@ -25,9 +35,8 @@ const DropdownArrow = ({ active }) => (
   </Box>
 );
 
-const AccordionHeading = ({ children, active = false, ...props }) => (
+const DisclosureHeading = ({ children, active = false, ...props }) => (
   <Flex
-    as={AccordionButton}
     justifyContent="space-between"
     width="100%"
     fontFamily="BalooBold"
@@ -45,72 +54,103 @@ const AccordionHeading = ({ children, active = false, ...props }) => (
   </Flex>
 );
 
-const SectionHeading = ({ children, ...props }) => (
+const SectionHeading = ({ children, src, ...props }) => (
   <Flex alignItems="center">
-    <Flex
-      alignItems="center"
-      justifyContent="center"
-      borderRadius="full"
-      height="40px"
-      width="40px"
-      bg="white"
-      mr={2}
-      // shadow="base"
-    >
-      <Image maxWidth="30px" {...props} />
-    </Flex>
+    {!!src && (
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        borderRadius="full"
+        height="40px"
+        width="40px"
+        bg="white"
+        mr={2}
+        // shadow="base"
+      >
+        <Image maxWidth="30px" src={src} {...props} />
+      </Flex>
+    )}
     {children}
   </Flex>
 );
 
-const sections = [
-  {
-    key: 'fossils',
-    label: (
-      <SectionHeading src="/museum.png" alt="animal crossing museum">
-        {' '}
-        Fossils
-      </SectionHeading>
-    ),
-  },
-  {
-    key: 'locations',
-    label: (
-      <SectionHeading src="/townhall.png" alt="animal crossing townhall">
-        {' '}
-        Locations
-      </SectionHeading>
-    ),
-  },
-  {
-    key: 'resources',
-    label: (
-      <SectionHeading src="/apple.png" alt="animal crossing apple icon">
-        {' '}
-        Resources
-      </SectionHeading>
-    ),
-  },
-  {
-    key: 'other',
-    label: (
-      <SectionHeading src="/leaf.png" alt="animal crossing leaf icon">
-        {' '}
-        Other
-      </SectionHeading>
-    ),
-  },
-];
+function CustomCategoryForm({ refetch }) {
+  const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    setIsLoading(true);
+    const token = getToken();
+    await createTask({
+      data: {
+        name: '',
+        category: value,
+      },
+      token,
+    });
+
+    await refetch();
+
+    setIsLoading(false);
+    setValue('');
+  }
+
+  return (
+    <>
+      <Box as="hr" borderColor="#007d75" my={10} />
+      <Stack as="form" onSubmit={handleSubmit}>
+        <Input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="Category Name"
+          disabled={isLoading}
+        />
+        <Button isLoading={isLoading} type="submit">
+          Add Custom Category
+        </Button>
+      </Stack>
+    </>
+  );
+}
+
+const categoryIcons = {
+  fossils: '/museum.png',
+  locations: '/townhall.png',
+  resources: '/apple.png',
+  villagers: '/leaf.png',
+};
 
 export default function ListView() {
   const [isLoading, setIsLoading] = useState(false);
-  const [activeSections, setActiveSections] = useState([
-    ...new Array(sections.length).fill(null).map((_, index) => index),
-  ]);
   const token = getToken();
   const [user, { refetch, updatedAt }] = useQuery(getCurrentUser, token);
+  const sortedTasks = user.tasks.sort((a, b) => {
+    // @ts-ignore
+    return compareDesc(parseISO(b.created_at), parseISO(a.created_at));
+  });
 
-  function toggleItem(toggledIndex) {
+  const groupedTasks = sortedTasks.reduce((result, task) => {
+    // ignore villager tasks in this view
+    if (task.category === 'villager') return result;
+
+    if (result[task.category]) {
+      result[task.category].push(task);
+    } else {
+      result[task.category] = [task];
+    }
+
+    return result;
+  }, {});
+
+  const [activeSections, setActiveSections] = useState([
+    ...new Array(Object.keys(groupedTasks).length)
+      .fill(null)
+      .map((_, index) => index),
+  ]);
+
+  function toggleItem(toggledIndex: any) {
     if (activeSections.includes(toggledIndex)) {
       setActiveSections(
         activeSections.filter((currentIndex) => currentIndex !== toggledIndex)
@@ -125,6 +165,7 @@ export default function ListView() {
       <Button
         isLoading={isLoading}
         width="100%"
+        my={2}
         onClick={async () => {
           const cookie = Cookie.parse(document.cookie);
           const token = cookie[COOKIE_KEY];
@@ -136,24 +177,35 @@ export default function ListView() {
       >
         Reset Tasks
       </Button>
-      <Accordion index={activeSections} onChange={toggleItem}>
-        {sections.map((section, index) => (
-          <AccordionItem key={section.key}>
-            <AccordionHeading active={activeSections.includes(index)}>
-              {section.label}
-            </AccordionHeading>
-            <AccordionPanel>
-              <Checklist
-                // change key when data is refreshed to clear stale state
-                key={updatedAt}
-                initialItems={user.tasks}
-                category={section.key}
-                refetch={refetch}
-              />
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
+      {Object.entries(groupedTasks).map(([key, section], index) => (
+        <Disclosure
+          key={key}
+          defaultOpen
+          open={activeSections.includes(index)}
+          onChange={() => toggleItem(index)}
+        >
+          <DisclosureButton style={{ width: '100%' }}>
+            <DisclosureHeading active={activeSections.includes(index)}>
+              <SectionHeading
+                src={categoryIcons[key] ?? '/leaf.png'}
+                alt="animal crossing leaf icon"
+              >
+                {key}
+              </SectionHeading>
+            </DisclosureHeading>
+          </DisclosureButton>
+          <DisclosurePanel>
+            <Checklist
+              // change key when data is refreshed to clear stale state
+              key={updatedAt}
+              initialItems={user.tasks}
+              category={key}
+              refetch={refetch}
+            />
+          </DisclosurePanel>
+        </Disclosure>
+      ))}
+      <CustomCategoryForm refetch={refetch} />
     </>
   );
 }
