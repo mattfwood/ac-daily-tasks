@@ -3,13 +3,11 @@ import db from 'db';
 export default async function updateTask(args: any) {
   const { token, where, data } = args;
 
-  // fetch these directly from the database to avoid params being modified
-  const [user, task] = await Promise.all([
-    db.user.findOne({ where: { token } }),
-    db.task.findOne({ where: { id: where.id } }),
-  ]);
+  const [task] = await db.task.findMany({
+    where: { id: where.id, User: { token } },
+  });
 
-  if (task.userId !== user.id) {
+  if (!task) {
     throw new Error('You do not have permission to edit this task.');
   }
 

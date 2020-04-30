@@ -175,7 +175,7 @@ export default function ListView() {
           setIsLoading(false);
         }}
       >
-        Reset Tasks
+        Reset All Tasks
       </Button>
       {Object.entries(groupedTasks).map(([key, section], index) => (
         <Disclosure

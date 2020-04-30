@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Box,
@@ -46,7 +46,9 @@ export default function VillagerView() {
   // const [hoverId, setHoverId] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
 
-  const activeVillagers = user.tasks
+  const [tasks, setTasks] = useState(user.tasks);
+
+  const activeVillagers = tasks
     .filter((task) => task.category === 'villager')
     .map((villagerTask) => {
       const data = villagers.find(
@@ -90,6 +92,11 @@ export default function VillagerView() {
       ) &&
       villager.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  // whenever the number of tasks / villagers changes, update the local tasks
+  useEffect(() => {
+    setTasks(user.tasks);
+  }, [user.tasks.length]);
 
   return (
     <>
@@ -145,16 +152,27 @@ export default function VillagerView() {
                   marginRight={0}
                   checked={!!villager.completed_at}
                   onChange={async () => {
+                    const completed_at = villager.completed_at
+                      ? null
+                      : new Date();
+                    // optimistically update
+                    const taskIndex = tasks.findIndex(
+                      (task) => task.id === villager.id
+                    );
+                    const updatedTasks = [...tasks];
+                    updatedTasks[taskIndex] = {
+                      ...updatedTasks[taskIndex],
+                      completed_at,
+                    };
+                    setTasks(updatedTasks);
                     await updateTask({
                       where: { id: villager.id },
                       data: {
-                        completed_at: villager.completed_at
-                          ? null
-                          : new Date().toISOString(),
+                        completed_at: completed_at,
                       },
                       token,
                     });
-                    await refetchUser();
+                    // await refetchUser();
                   }}
                 />
               )}
