@@ -45,6 +45,7 @@ const customTheme = {
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     ReactGA.initialize('UA-165302150-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
   return (
     <ThemeProvider theme={customTheme}>
