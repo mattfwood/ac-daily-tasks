@@ -88,6 +88,12 @@ const Home = ({ loggedIn, ...props }) => {
         *:focus {
           outline: 0;
         }
+
+        button:focus {
+          border-color: #a4cafe;
+          box-shadow: 0 0 0 3px rgba(118, 169, 250, 0.45);
+          outline: 0;
+        }
       `}</style>
     </div>
   );

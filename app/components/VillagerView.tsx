@@ -78,6 +78,7 @@ export default function VillagerView() {
 
     await refetchUser();
     setIsLoading(false);
+    setSearch('');
   }
 
   async function removeVillager(villager) {
@@ -117,11 +118,44 @@ export default function VillagerView() {
       </Flex>
       <Stack horizontal flexWrap="wrap" justifyContent="center">
         {sortedActiveVillagers.map((villager) => (
-          <Flex
+          <Button
             key={villager.id}
+            bg="transparent"
+            borderBottom={0}
             flexDirection="column"
             alignItems="center"
+            color="#374151"
             p={2}
+            _active={{
+              bg: 'transparent',
+            }}
+            _hover={{
+              bg: 'transparent',
+            }}
+            onClick={async () => {
+              if (deleteMode) {
+                removeVillager(villager);
+              } else {
+                const completed_at = villager.completed_at ? null : new Date();
+                // optimistically update
+                const taskIndex = tasks.findIndex(
+                  (task) => task.id === villager.id
+                );
+                const updatedTasks = [...tasks];
+                updatedTasks[taskIndex] = {
+                  ...updatedTasks[taskIndex],
+                  completed_at,
+                };
+                setTasks(updatedTasks);
+                await updateTask({
+                  where: { id: villager.id },
+                  data: {
+                    completed_at: completed_at,
+                  },
+                  token,
+                });
+              }
+            }}
           >
             <Box
               borderRadius="9999px"
@@ -134,19 +168,18 @@ export default function VillagerView() {
                 alt="villager icon"
               />
               {deleteMode ? (
-                <HeaderButton
+                <Box
                   p={1}
                   position="absolute"
                   top="-5px"
                   right="-5px"
                   bg="white"
-                  color=""
                   borderRadius="full"
                   _hover={{ bg: 'white' }}
-                  onClick={() => removeVillager(villager)}
+                  // onClick={() => removeVillager(villager)}
                 >
                   <Icon size="16px" name="x" color="#FF524A" />
-                </HeaderButton>
+                </Box>
               ) : (
                 <CustomCheckbox
                   position="absolute"
@@ -154,48 +187,32 @@ export default function VillagerView() {
                   right="-5px"
                   marginRight={0}
                   checked={!!villager.completed_at}
-                  onChange={async () => {
-                    const completed_at = villager.completed_at
-                      ? null
-                      : new Date();
-                    // optimistically update
-                    const taskIndex = tasks.findIndex(
-                      (task) => task.id === villager.id
-                    );
-                    const updatedTasks = [...tasks];
-                    updatedTasks[taskIndex] = {
-                      ...updatedTasks[taskIndex],
-                      completed_at,
-                    };
-                    setTasks(updatedTasks);
-                    await updateTask({
-                      where: { id: villager.id },
-                      data: {
-                        completed_at: completed_at,
-                      },
-                      token,
-                    });
-                    // await refetchUser();
-                  }}
                 />
               )}
             </Box>
             {villager.name}
-          </Flex>
+          </Button>
         ))}
       </Stack>
       {activeVillagers.length === 0 && (
-        <Flex color="#007d75" opacity={0.6} justifyContent="center" py={6}>
+        <Flex
+          color="#007d75"
+          opacity={0.6}
+          justifyContent="center"
+          fontSize="lg"
+          py={6}
+        >
           Search Below To Add Villagers
         </Flex>
       )}
-      <Heading as="h2" fontSize="2xl" fontFamily="BalooBold" my={2}>
+      <Heading as="h2" fontSize="2xl" fontFamily="BalooBold" my={4}>
         Add Villagers
       </Heading>
       <Input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Villager Name"
+        disabled={isLoading}
       />
       <Stack horizontal flexWrap="wrap" justifyContent="center">
         {results.map((villager) => (

@@ -43,8 +43,8 @@ const DisclosureHeading = ({ children, active = false, ...props }) => (
     bg="#89C68A"
     borderRadius="lg"
     // borderBottom="2px dashed #86612D"
-    p={3}
-    my={2}
+    px={3}
+    py={5}
   >
     <Heading as="h2" fontSize="2xl" textTransform="capitalize" color="#fff">
       {children}
@@ -184,7 +184,7 @@ export default function ListView() {
           open={activeSections.includes(index)}
           onChange={() => toggleItem(index)}
         >
-          <DisclosureButton style={{ width: '100%' }}>
+          <Box as={DisclosureButton} width="100%" mb={4} borderRadius="lg">
             <DisclosureHeading active={activeSections.includes(index)}>
               <SectionHeading
                 src={categoryIcons[key] ?? '/leaf.png'}
@@ -193,7 +193,7 @@ export default function ListView() {
                 {key}
               </SectionHeading>
             </DisclosureHeading>
-          </DisclosureButton>
+          </Box>
           <DisclosurePanel>
             <Checklist
               // change key when data is refreshed to clear stale state
