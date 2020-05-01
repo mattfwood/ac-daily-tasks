@@ -1,6 +1,32 @@
 import React, { useState } from 'react';
-import { Button, Input, Flex, Alert } from 'minerva-ui';
+import { Button, Input, Flex, Alert, Heading, Text } from 'minerva-ui';
 import createUser from 'app/users/mutations/createUser';
+
+const EXAMPLE_TASKS = [
+  'Talk to Sabel',
+  'Check Your Bonus Nook Miles',
+  'Buy Fake Art',
+  'Find Your Fossils',
+  'Invite Elijah Wood',
+  'Shake Your Trees',
+];
+
+const getRandomTask = () => {
+  return EXAMPLE_TASKS[Math.floor(Math.random() * EXAMPLE_TASKS.length)];
+};
+
+const task = getRandomTask();
+
+// const FeatureCard = ({ title, children, ...props }) => {
+//   return (
+//     <Box p={4}>
+//       <Text fontFamily="BalooBold" fontSize="lg">
+//         {title}
+//       </Text>
+//       <Text fontSize="md">{children}</Text>
+//     </Box>
+//   );
+// };
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -34,9 +60,7 @@ export default function LoginForm() {
         // when developing locally, just go to the token route instead of sending an email
         window.location.href = res.url;
       }
-      setSuccess(
-        "Great, you've just been emailed a link you can use to sign in"
-      );
+      setSuccess('Check Your Email For a Link To Sign In');
     } catch (error) {
       console.error(error);
     } finally {
@@ -45,27 +69,72 @@ export default function LoginForm() {
   }
 
   return (
-    <Flex alignItems="center" flexDirection="column">
-      <Flex as="form" maxWidth="600px" onSubmit={handleSubmit} px={2} py={6}>
-        <Input
+    <>
+      <Flex alignItems="center" flexDirection="column" textAlign="center">
+        <Heading
+          as="h1"
+          fontFamily="BalooBold"
           // @ts-ignore
-          appearance="none"
-          placeholder="Email Address"
-          radiusRight={0}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={isLoading}
-        />
-        <Button
-          type="submit"
-          radiusLeft={0}
-          minWidth="80px"
-          isLoading={isLoading}
+          fontSize={['2rem', '3rem']}
+          my={6}
         >
-          Log In
-        </Button>
+          Never Forget To {task} Again
+        </Heading>
+        <Heading as="h2" fontSize="20px" my={6}>
+          Froggy Chores is a simple daily task tracker for Animal Crossing.
+        </Heading>
+        <Flex
+          as="form"
+          width="100%"
+          maxWidth="400px"
+          onSubmit={handleSubmit}
+          flexDirection="column"
+          px={2}
+          py={2}
+        >
+          <Input
+            // @ts-ignore
+            appearance="none"
+            placeholder="Email Address"
+            // radiusBottom={0}
+            paddingRight={2}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+          />
+          <Button
+            type="submit"
+            mt={2}
+            // radiusTop={0}
+
+            // radiusRight="10px"
+            // radiusBottom="10px"
+            minWidth="100px"
+            isLoading={isLoading}
+          >
+            Get Started
+          </Button>
+        </Flex>
+        {success && (
+          <Alert status="success">
+            <Text as="span" px={2}>
+              {success}
+            </Text>
+          </Alert>
+        )}
       </Flex>
-      {success && <Alert status="success">{success}</Alert>}
-    </Flex>
+      {/* <Flex flexWrap="wrap">
+        <FeatureCard title="Get Started Quickly">
+          You'll be set with several pre-defined tasks to start tracking right
+          away
+        </FeatureCard>
+        <FeatureCard title="Create Custom Tasks">
+          Create your own custom tasks to check on daily
+        </FeatureCard>
+        <FeatureCard title="Track Your Villagers">
+          Add Your Villagers And Track Who You've Talked To
+        </FeatureCard>
+      </Flex> */}
+    </>
   );
 }

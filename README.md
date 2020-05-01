@@ -1,24 +1,11 @@
-# ac-daily-tasks
+# Froggy Chores
 
-## Getting Started
+## FAQ
+> What is this?
 
-1. Ensure you have Postgres installed locally
-2. Set the `DATABASE_URL` environment variable, something like this:
+I wanted to create a simple daily task tracking app that felt fun to use.
 
-```
-DATABASE_URL=postgresql://<your_computer_username>@localhost:5432/blitz-example-store
-```
+> Can I see the source code / can I help in any way?
 
-3. DB migrate
+Message me directly to get access to the source code, just because I'm a bit paranoid.
 
-```
-blitz db migrate
-```
-
-4. Start the dev server
-
-```
-blitz start
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

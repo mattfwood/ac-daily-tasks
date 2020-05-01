@@ -43,6 +43,7 @@ export default function VillagerView() {
   const token = getToken();
   const [user, { refetch: refetchUser }] = useQuery(getCurrentUser, token);
   const [search, setSearch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   // const [hoverId, setHoverId] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
 
@@ -66,6 +67,7 @@ export default function VillagerView() {
   });
 
   async function addVillager(villager) {
+    setIsLoading(true);
     await createTask({
       data: {
         name: villager.name,
@@ -75,6 +77,7 @@ export default function VillagerView() {
     });
 
     await refetchUser();
+    setIsLoading(false);
   }
 
   async function removeVillager(villager) {
@@ -205,6 +208,11 @@ export default function VillagerView() {
             p={2}
             color="#374151"
             onClick={() => addVillager(villager)}
+            disabled={isLoading}
+            _disabled={{
+              opacity: 0.6,
+              cursor: 'not-allowed',
+            }}
             _active={{
               bg: 'transparent',
             }}

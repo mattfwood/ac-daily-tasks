@@ -20,6 +20,9 @@ const withSourceMaps = require('@zeit/next-source-maps')();
 // const { SENTRY_DSN, SENTRY_ORG, SENTRY_PROJECT } = process.env
 
 module.exports = withSourceMaps({
+  experimental: {
+    reactRefresh: true,
+  },
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/node. While
     // @sentry/browser will run in a Node.js environment, @sentry/node will use
