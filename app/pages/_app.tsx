@@ -1,5 +1,8 @@
 import { ThemeProvider, GlobalStyles, defaultTheme } from 'minerva-ui';
 import * as Sentry from '@sentry/node';
+import ReactGA from 'react-ga';
+
+import { useEffect } from 'react';
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
@@ -40,6 +43,9 @@ const customTheme = {
 };
 
 export default function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    ReactGA.initialize('UA-165302150-1');
+  }, []);
   return (
     <ThemeProvider theme={customTheme}>
       <GlobalStyles />

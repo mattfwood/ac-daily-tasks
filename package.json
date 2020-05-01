@@ -43,6 +43,7 @@
     "postmark": "2.5.1",
     "react": "experimental",
     "react-dom": "experimental",
+    "react-ga": "2.7.0",
     "styled-components": "5.1.0",
     "tinify": "1.6.0-beta.2",
     "typescript": "3.8.3"
