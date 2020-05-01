@@ -1,17 +1,19 @@
 # Froggy Chores
 ## A Simple Task Tracker for Animal Crossing
 
-## FAQ
-> What is this?
+### What is this?
 
-This is a simple
+This is a simple task-tracking app for Animal Crossing.
 
-> Can I see the source code / can I help in any way?
+I wanted to create something simple but customizable, with as little friction as possible.
+
+I use the "magic link" authentication strategy to avoid remembering, storing or recovering passwords.
+
+### Can I see the source code / can I help in any way?
 
 Message me directly to get access to the source code, just because I'm a bit paranoid.
 
-
-### Stack
+### Tech Stack
 
 - [React](https://reactjs.org/) - Frontend view library
 - [Blitz.js](https://github.com/blitz-js/blitz) - Full-stack React framework

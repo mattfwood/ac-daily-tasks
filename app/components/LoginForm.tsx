@@ -117,9 +117,7 @@ export default function LoginForm() {
         </Flex>
         {success && (
           <Alert status="success">
-            <Text as="span" px={2}>
-              {success}
-            </Text>
+            <Text as="span">{success}</Text>
           </Alert>
         )}
       </Flex>
