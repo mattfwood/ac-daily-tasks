@@ -100,7 +100,7 @@ export default function VillagerView() {
   // whenever the number of tasks / villagers changes, update the local tasks
   useEffect(() => {
     setTasks(user.tasks);
-  }, [user.tasks.length]);
+  }, [user.tasks]);
 
   return (
     <>
@@ -187,6 +187,7 @@ export default function VillagerView() {
                   right="-5px"
                   marginRight={0}
                   checked={!!villager.completed_at}
+                  pointerEvents="none"
                 />
               )}
             </Box>
