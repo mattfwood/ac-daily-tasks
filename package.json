@@ -63,7 +63,7 @@
     "eslint-plugin-react-hooks": "2.5.1",
     "husky": "4.2.5",
     "lint-staged": "10.1.7",
-    "next": "9.3.6"
+    "next": "11.1.0"
   },
   "private": true
 }
